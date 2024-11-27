@@ -37,16 +37,13 @@ import java.util.function.Supplier;
 
 @SuppressWarnings("deprecation")
 public class RichBisonBBQPlateBlock extends HorizontalDirectionalBlock {
-    public static final IntegerProperty BITES;
-    private final int maxBites;
+    public static final IntegerProperty BITES = IntegerProperty.create("bites", 0, 4);
     private final FoodProperties foodComponent;
 
-    public RichBisonBBQPlateBlock(Properties properties, int maxBites, FoodProperties foodComponent) {
+    public RichBisonBBQPlateBlock(Properties properties, FoodProperties foodComponent) {
         super(properties);
-
-        this.maxBites = maxBites;
         this.foodComponent = foodComponent;
-        this.registerDefaultState(this.defaultBlockState().setValue(BITES, 0));
+        this.registerDefaultState(this.defaultBlockState().setValue(BITES, 4).setValue(FACING, Direction.NORTH));
     }
 
     @Override
@@ -59,260 +56,253 @@ public class RichBisonBBQPlateBlock extends HorizontalDirectionalBlock {
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+        return this.defaultBlockState()
+                .setValue(FACING, context.getHorizontalDirection().getOpposite())
+                .setValue(BITES, 4);
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        super.createBlockStateDefinition(builder);
         builder.add(FACING, BITES);
+    }
+
+    private boolean isEdible(BlockState state) {
+        return state.getValue(BITES) > 0;
     }
 
     @Override
     public @NotNull InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        ItemStack itemStack = player.getItemInHand(hand);
         if (world.isClientSide) {
-            if (tryEat(world, pos, state, player).consumesAction()) {
+            if (this.isEdible(state)) {
                 return InteractionResult.SUCCESS;
-            }
-
-            if (itemStack.isEmpty()) {
-                return InteractionResult.CONSUME;
+            } else {
+                return InteractionResult.PASS;
             }
         }
-        return tryEat(world, pos, state, player);
+        return this.tryEat(world, pos, state, player);
     }
 
-    private InteractionResult tryEat(LevelAccessor world, BlockPos pos, BlockState state, Player player) {
-        if (!player.canEat(false)) {
+    private InteractionResult tryEat(Level world, BlockPos pos, BlockState state, Player player) {
+        if (!this.isEdible(state) || !player.canEat(false)) {
             return InteractionResult.PASS;
         } else {
             player.getFoodData().eat(foodComponent.getNutrition(), foodComponent.getSaturationModifier());
-            world.playSound(null, pos, SoundEvents.FOX_EAT, SoundSource.PLAYERS, 0.5f, world.getRandom().nextFloat() * 0.1f + 0.9f);
+            world.playSound(null, pos, SoundEvents.GENERIC_EAT, SoundSource.PLAYERS, 0.5f, world.getRandom().nextFloat() * 0.1f + 0.9f);
             world.gameEvent(player, GameEvent.EAT, pos);
 
             int bites = state.getValue(BITES);
-            if (bites < maxBites - 1) {
-                world.setBlock(pos, state.setValue(BITES, bites + 1), 3);
-            } else {
-                world.destroyBlock(pos, false);
-                world.gameEvent(player, GameEvent.BLOCK_DESTROY, pos);
+            if (bites > 0) {
+                world.setBlock(pos, state.setValue(BITES, bites - 1), 3);
+                spawnBlockBreakParticles(world, pos, state);
+            }
+
+            if (areAllBitesZero(world, pos, state)) {
+                destroyAllBlocks(world, pos, state);
             }
 
             return InteractionResult.SUCCESS;
         }
     }
 
-    static {
-        BITES = IntegerProperty.create("bites", 0, 3);
+    private void spawnBlockBreakParticles(Level world, BlockPos pos, BlockState state) {
+        if (!world.isClientSide) {
+            return;
+        }
+        world.levelEvent(2001, pos, Block.getId(state));
+    }
+
+    private boolean areAllBitesZero(Level world, BlockPos pos, BlockState state) {
+        Direction facing = state.getValue(FACING);
+        BlockPos[] allPositions = getAllBlockPositions(pos, facing, state.getBlock());
+
+        for (BlockPos blockPos : allPositions) {
+            BlockState blockState = world.getBlockState(blockPos);
+            if (blockState.getBlock() instanceof RichBisonBBQPlateBlock) {
+                int bites = blockState.getValue(BITES);
+                if (bites > 0) {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private void destroyAllBlocks(Level world, BlockPos pos, BlockState state) {
+        Direction facing = state.getValue(FACING);
+        BlockPos[] allPositions = getAllBlockPositions(pos, facing, state.getBlock());
+
+        for (BlockPos blockPos : allPositions) {
+            world.destroyBlock(blockPos, false);
+        }
+    }
+
+    private BlockPos[] getOtherBlockPositions(BlockPos pos, Direction facing, Block blockType) {
+        if (blockType instanceof BBQPlateMainBlock) {
+            BlockPos backPos = pos.relative(facing.getOpposite());
+            BlockPos sidePos = pos.relative(facing.getCounterClockWise());
+            BlockPos diagonalPos = sidePos.relative(facing.getOpposite());
+            return new BlockPos[]{backPos, sidePos, diagonalPos};
+        } else if (blockType instanceof BBQPlateHeadBlock) {
+            BlockPos mainPos = pos.relative(facing);
+            BlockPos sidePos = pos.relative(facing.getCounterClockWise());
+            BlockPos diagonalPos = sidePos.relative(facing);
+            return new BlockPos[]{mainPos, sidePos, diagonalPos};
+        } else if (blockType instanceof BBQPlateRightBlock) {
+            BlockPos mainPos = pos.relative(facing.getClockWise());
+            BlockPos backPos = pos.relative(facing.getOpposite());
+            BlockPos diagonalPos = backPos.relative(facing.getClockWise());
+            return new BlockPos[]{mainPos, backPos, diagonalPos};
+        } else if (blockType instanceof BBQPlateHeadRightBlock) {
+            BlockPos mainPos = pos.relative(facing.getClockWise().getOpposite());
+            BlockPos backPos = pos.relative(facing.getOpposite());
+            BlockPos sidePos = pos.relative(facing.getClockWise());
+            return new BlockPos[]{mainPos, backPos, sidePos};
+        } else {
+            return new BlockPos[0];
+        }
+    }
+
+    private BlockPos[] getAllBlockPositions(BlockPos pos, Direction facing, Block blockType) {
+        BlockPos[] positions = new BlockPos[4];
+        positions[0] = pos;
+        BlockPos[] otherPositions = getOtherBlockPositions(pos, facing, blockType);
+        System.arraycopy(otherPositions, 0, positions, 1, otherPositions.length);
+        return positions;
     }
 
     public static class BBQPlateHeadBlock extends RichBisonBBQPlateBlock {
-        public static final IntegerProperty BITES;
-
-        private static final Supplier<VoxelShape> bottomVoxelShapeSupplier = () -> {
+        private static final Supplier<VoxelShape> VoxelShapeSupplier = () -> {
             VoxelShape shape = Shapes.empty();
-            shape = Shapes.join(shape, Shapes.box(0.8125, 0, 0.8125, 1, 1, 1), BooleanOp.OR);
-            shape = Shapes.join(shape, Shapes.box(0.8125, 0, 0, 0.875, 1, 0.8125), BooleanOp.OR);
-            shape = Shapes.join(shape, Shapes.box(0, 0, 0.8125, 0.8125, 1, 0.875), BooleanOp.OR);
-            shape = Shapes.join(shape, Shapes.box(0.875, 0, 0, 0.9375, 1, 0.0625), BooleanOp.OR);
+            shape = Shapes.join(shape, Shapes.box(0, 0, 0, 0.875, 0.0625, 0.875), BooleanOp.OR);
+            shape = Shapes.join(shape, Shapes.box(0.0625, 0.0625, 0.1875, 0.6875, 0.5625, 0.8125), BooleanOp.OR);
             return shape;
         };
-        public static final Map<Direction, VoxelShape> BOTTOM_SHAPE = Util.make(new HashMap<>(), map -> {
+        public static final Map<Direction, VoxelShape> SHAPE = Util.make(new HashMap<>(), map -> {
             for (Direction direction : Direction.Plane.HORIZONTAL) {
-                map.put(direction, SafariBanquetUtil.rotateShape(Direction.NORTH, direction, bottomVoxelShapeSupplier.get()));
+                map.put(direction, SafariBanquetUtil.rotateShape(Direction.NORTH, direction, VoxelShapeSupplier.get()));
             }
         });
 
-        public BBQPlateHeadBlock(Properties properties, int maxBites, FoodProperties foodComponent) {
-            super(properties, maxBites, foodComponent);
-            this.registerDefaultState(this.defaultBlockState().setValue(BITES, 0));
-        }
-
-
-        @Override
-        public void onPlace(BlockState blockState, Level level, BlockPos blockPos, BlockState blockState2, boolean bl) {
-        }
-
-        public @NotNull BlockState updateShape(BlockState blockState, Direction direction, BlockState blockState2, LevelAccessor levelAccessor, BlockPos blockPos, BlockPos blockPos2) {
-            return super.updateShape(blockState, direction, blockState2, levelAccessor, blockPos, blockPos2);
+        public BBQPlateHeadBlock(Properties properties, FoodProperties foodComponent) {
+            super(properties, foodComponent);
+            this.registerDefaultState(this.defaultBlockState().setValue(BITES, 4).setValue(FACING, Direction.NORTH));
         }
 
         @Override
-        public void onRemove(BlockState blockState, Level level, BlockPos blockPos, BlockState blockState2, boolean bl) {
-            Direction facing = blockState.getValue(FACING);
-            BlockPos front = blockPos.relative(facing);
-            BlockPos sidePos = blockPos.relative(facing.getCounterClockWise());
-            BlockPos diagonalPos = sidePos.relative(facing);
-
-            level.removeBlock(front, false);
-            level.removeBlock(sidePos, false);
-            level.removeBlock(diagonalPos, false);
-            level.removeBlock(blockPos, false);
-
-            super.onRemove(blockState, level, blockPos, blockState2, bl);
+        public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean bl) {
         }
 
         @Override
-        protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-            super.createBlockStateDefinition(builder);
+        public @NotNull BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor world, BlockPos pos, BlockPos neighborPos) {
+            return super.updateShape(state, direction, neighborState, world, pos, neighborPos);
+        }
+
+        @Override
+        public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean moved) {
+            if (!state.is(newState.getBlock())) {
+                Direction facing = state.getValue(FACING);
+                BlockPos mainPos = pos.relative(facing);
+                BlockPos sidePos = pos.relative(facing.getCounterClockWise());
+                BlockPos diagonalPos = sidePos.relative(facing);
+
+                level.removeBlock(mainPos, false);
+                level.removeBlock(sidePos, false);
+                level.removeBlock(diagonalPos, false);
+                super.onRemove(state, level, pos, newState, moved);
+            }
         }
 
         @Override
         public @NotNull VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
             Direction facing = state.getValue(FACING);
-            return BOTTOM_SHAPE.get(facing);
-        }
-
-        static {
-            BITES = IntegerProperty.create("bites", 0, 3);
+            return SHAPE.get(facing);
         }
     }
 
     public static class BBQPlateHeadRightBlock extends RichBisonBBQPlateBlock {
-        public static final IntegerProperty BITES;
-
-        private static final Supplier<VoxelShape> bottomVoxelShapeSupplier = () -> {
+        private static final Supplier<VoxelShape> VoxelShapeSupplier = () -> {
             VoxelShape shape = Shapes.empty();
-            shape = Shapes.join(shape, Shapes.box(0, 0, 0.8125, 0.1875, 1, 1), BooleanOp.OR);
-            shape = Shapes.join(shape, Shapes.box(0.125, 0, 0, 0.1875, 1, 0.8125), BooleanOp.OR);
-            shape = Shapes.join(shape, Shapes.box(0.1875, 0, 0.8125, 1, 1, 0.875), BooleanOp.OR);
-            shape = Shapes.join(shape, Shapes.box(0.0625, 0, 0, 0.125, 1, 0.0625), BooleanOp.OR);
+            shape = Shapes.join(shape, Shapes.box(0.125, 0, 0, 1, 0.0625, 0.875), BooleanOp.OR);
+            shape = Shapes.join(shape, Shapes.box(0.1875, 0.0625, 0.0625, 0.9375, 0.3125, 0.8125), BooleanOp.OR);
             return shape;
         };
-        public static final Map<Direction, VoxelShape> BOTTOM_SHAPE = Util.make(new HashMap<>(), map -> {
+        public static final Map<Direction, VoxelShape> SHAPE = Util.make(new HashMap<>(), map -> {
             for (Direction direction : Direction.Plane.HORIZONTAL) {
-                map.put(direction, SafariBanquetUtil.rotateShape(Direction.NORTH, direction, bottomVoxelShapeSupplier.get()));
+                map.put(direction, SafariBanquetUtil.rotateShape(Direction.NORTH, direction, VoxelShapeSupplier.get()));
             }
         });
 
-        public BBQPlateHeadRightBlock(Properties properties, int maxBites, FoodProperties foodComponent) {
-            super(properties, maxBites, foodComponent);
-            this.registerDefaultState(this.defaultBlockState().setValue(BITES, 0));
+        public BBQPlateHeadRightBlock(Properties properties, FoodProperties foodComponent) {
+            super(properties, foodComponent);
+            this.registerDefaultState(this.defaultBlockState().setValue(BITES, 4).setValue(FACING, Direction.NORTH));
         }
 
         @Override
-        public void onPlace(BlockState blockState, Level level, BlockPos blockPos, BlockState blockState2, boolean bl) {
-        }
-
-        public @NotNull BlockState updateShape(BlockState blockState, Direction direction, BlockState blockState2, LevelAccessor levelAccessor, BlockPos blockPos, BlockPos blockPos2) {
-            return super.updateShape(blockState, direction, blockState2, levelAccessor, blockPos, blockPos2);
+        public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean bl) {
         }
 
         @Override
-        protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-            super.createBlockStateDefinition(builder);
+        public @NotNull BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor world, BlockPos pos, BlockPos neighborPos) {
+            return super.updateShape(state, direction, neighborState, world, pos, neighborPos);
         }
 
         @Override
-        public void onRemove(BlockState blockState, Level level, BlockPos blockPos, BlockState blockState2, boolean bl) {
-            Direction facing = blockState.getValue(FACING);
-            BlockPos front = blockPos.relative(facing);
-            BlockPos sidePos = blockPos.relative(facing.getClockWise());
-            BlockPos diagonalPos = sidePos.relative(facing);
+        public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean moved) {
+            if (!state.is(newState.getBlock())) {
+                Direction facing = state.getValue(FACING);
+                BlockPos mainPos = pos.relative(facing.getClockWise().getOpposite());
+                BlockPos backPos = pos.relative(facing.getOpposite());
+                BlockPos sidePos = pos.relative(facing.getClockWise());
 
-            level.removeBlock(front, false);
-            level.removeBlock(sidePos, false);
-            level.removeBlock(diagonalPos, false);
-            level.removeBlock(blockPos, false);
-
-            super.onRemove(blockState, level, blockPos, blockState2, bl);
+                level.removeBlock(mainPos, false);
+                level.removeBlock(backPos, false);
+                level.removeBlock(sidePos, false);
+                super.onRemove(state, level, pos, newState, moved);
+            }
         }
 
         @Override
         public @NotNull VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
             Direction facing = state.getValue(FACING);
-            return BOTTOM_SHAPE.get(facing);
-        }
-
-        static {
-            BITES = IntegerProperty.create("bites", 0, 3);
+            return SHAPE.get(facing);
         }
     }
 
     public static class BBQPlateMainBlock extends RichBisonBBQPlateBlock {
-        public static final IntegerProperty BITES;
-
-        private static final Supplier<VoxelShape> bottomVoxelShapeSupplier = () -> {
-            VoxelShape shape = Shapes.empty();
-            shape = Shapes.join(shape, Shapes.box(0.8125, 0, 0, 1, 1, 0.1875), BooleanOp.OR);
-            shape = Shapes.join(shape, Shapes.box(0.8125, 0, 0.1875, 0.875, 1, 1), BooleanOp.OR);
-            shape = Shapes.join(shape, Shapes.box(0.875, 0, 0.9375, 0.9375, 1, 1), BooleanOp.OR);
-            return shape;
-        };
-        public static final Map<Direction, VoxelShape> BOTTOM_SHAPE = Util.make(new HashMap<>(), map -> {
-            for (Direction direction : Direction.Plane.HORIZONTAL) {
-                map.put(direction, SafariBanquetUtil.rotateShape(Direction.NORTH, direction, bottomVoxelShapeSupplier.get()));
-            }
-        });
-
-        public BBQPlateMainBlock(Properties properties, int maxBites, FoodProperties foodComponent) {
-            super(properties, maxBites, foodComponent);
-            this.registerDefaultState(this.defaultBlockState().setValue(BITES, 0));
+        public BBQPlateMainBlock(Properties properties, FoodProperties foodComponent) {
+            super(properties, foodComponent);
+            this.registerDefaultState(this.defaultBlockState().setValue(BITES, 4).setValue(FACING, Direction.NORTH));
         }
 
         @Override
-        public void onPlace(BlockState blockState, Level level, BlockPos blockPos, BlockState blockState2, boolean bl) {
-        }
-
-        public @NotNull BlockState updateShape(BlockState blockState, Direction direction, BlockState blockState2, LevelAccessor levelAccessor, BlockPos blockPos, BlockPos blockPos2) {
-            return super.updateShape(blockState, direction, blockState2, levelAccessor, blockPos, blockPos2);
+        public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean bl) {
         }
 
         @Override
-        protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-            super.createBlockStateDefinition(builder);
+        public @NotNull BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor world, BlockPos pos, BlockPos neighborPos) {
+            return super.updateShape(state, direction, neighborState, world, pos, neighborPos);
         }
 
         @Override
-        public void onRemove(BlockState blockState, Level level, BlockPos blockPos, BlockState blockState2, boolean bl) {
-            Direction facing = blockState.getValue(FACING);
-            BlockPos backPos = blockPos.relative(facing.getOpposite());
-            BlockPos sidePos = blockPos.relative(facing.getCounterClockWise());
-            BlockPos diagonalPos = sidePos.relative(facing.getOpposite());
-
-            level.removeBlock(backPos, false);
-            level.removeBlock(sidePos, false);
-            level.removeBlock(diagonalPos, false);
-            level.removeBlock(blockPos, false);
-
-            super.onRemove(blockState, level, blockPos, blockState2, bl);
-        }
-
-        @Nullable
-        @Override
-        public BlockState getStateForPlacement(BlockPlaceContext blockPlaceContext) {
-            Level level = blockPlaceContext.getLevel();
-            BlockPos mainPos = blockPlaceContext.getClickedPos();
-            BlockState blockState = super.getStateForPlacement(blockPlaceContext);
-            if (blockState == null) return null;
-            Direction facing = blockState.getValue(FACING);
+        public @Nullable BlockState getStateForPlacement(BlockPlaceContext context) {
+            Level level = context.getLevel();
+            BlockPos mainPos = context.getClickedPos();
+            BlockState state = super.getStateForPlacement(context);
+            if (state == null) return null;
+            Direction facing = state.getValue(FACING);
             BlockPos backPos = mainPos.relative(facing.getOpposite());
             BlockPos sidePos = mainPos.relative(facing.getCounterClockWise());
             BlockPos diagonalPos = sidePos.relative(facing.getOpposite());
-            BlockPos topPos = diagonalPos.above();
-            boolean placeable = canPlace(level, backPos, sidePos, diagonalPos, topPos);
-            return placeable ? blockState : null;
+            if (!canPlace(level, backPos, sidePos, diagonalPos)) return null;
+            return state.setValue(BITES, 4);
         }
 
-        @Override
-        public void setPlacedBy(Level level, BlockPos blockPos, BlockState blockState, @Nullable LivingEntity livingEntity, ItemStack itemStack) {
-            super.setPlacedBy(level, blockPos, blockState, livingEntity, itemStack);
-            if (level.isClientSide) return;
-            Direction facing = blockState.getValue(FACING);
-            BlockPos backPos = blockPos.relative(facing.getOpposite());
-            BlockPos sidePos = blockPos.relative(facing.getCounterClockWise());
-            BlockPos diagonalPos = sidePos.relative(facing.getOpposite());
-            BlockPos topPos = diagonalPos.above();
-            if (!canPlace(level, backPos, sidePos, diagonalPos, topPos)) return;
-            level.setBlock(backPos, ObjectRegistry.RICH_BISON_BBQ_PLATE_HEAD.get().defaultBlockState().setValue(FACING, facing), 3);
-            level.setBlock(sidePos, ObjectRegistry.RICH_BISON_BBQ_PLATE_RIGHT.get().defaultBlockState().setValue(FACING, facing), 3);
-            level.setBlock(diagonalPos, ObjectRegistry.RICH_BISON_BBQ_PLATE_HEAD_RIGHT.get().defaultBlockState().setValue(FACING, facing), 3);
-        }
-
-        private boolean canPlace(Level level, BlockPos... blockPoses) {
-            for (BlockPos blockPos : blockPoses) {
-                if (!level.getBlockState(blockPos).isAir()) {
+        private boolean canPlace(Level level, BlockPos... positions) {
+            for (BlockPos pos : positions) {
+                if (!level.getBlockState(pos).canBeReplaced()) {
                     return false;
                 }
             }
@@ -320,28 +310,25 @@ public class RichBisonBBQPlateBlock extends HorizontalDirectionalBlock {
         }
 
         @Override
-        public @NotNull VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+        public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity entity, ItemStack stack) {
+            super.setPlacedBy(level, pos, state, entity, stack);
+            if (level.isClientSide) return;
             Direction facing = state.getValue(FACING);
-            return BOTTOM_SHAPE.get(facing);
-        }
-
-        static {
-            BITES = IntegerProperty.create("bites", 0, 3);
+            BlockPos backPos = pos.relative(facing.getOpposite());
+            BlockPos sidePos = pos.relative(facing.getCounterClockWise());
+            BlockPos diagonalPos = sidePos.relative(facing.getOpposite());
+            if (!canPlace(level, backPos, sidePos, diagonalPos)) return;
+            level.setBlock(backPos, ObjectRegistry.RICH_BISON_BBQ_PLATE_HEAD.get().defaultBlockState().setValue(FACING, facing).setValue(BITES, 4), 3);
+            level.setBlock(sidePos, ObjectRegistry.RICH_BISON_BBQ_PLATE_RIGHT.get().defaultBlockState().setValue(FACING, facing).setValue(BITES, 4), 3);
+            level.setBlock(diagonalPos, ObjectRegistry.RICH_BISON_BBQ_PLATE_HEAD_RIGHT.get().defaultBlockState().setValue(FACING, facing).setValue(BITES, 4), 3);
         }
     }
 
     public static class BBQPlateRightBlock extends RichBisonBBQPlateBlock {
-        public static final IntegerProperty BITES;
-
         private static final Supplier<VoxelShape> shapeSupplier = () -> {
             VoxelShape shape = Shapes.empty();
-            shape = Shapes.join(shape, Shapes.box(0, 0, 0, 0.1875, 1, 0.1875), BooleanOp.OR);
-            shape = Shapes.join(shape, Shapes.box(0.125, 0, 0.1875, 0.1875, 1, 1), BooleanOp.OR);
-            shape = Shapes.join(shape, Shapes.box(0.0625, 0, 0.9375, 0.125, 1, 1), BooleanOp.OR);
-            shape = Shapes.join(shape, Shapes.box(0, 0.8125, 0, 1, 1, 0.1875), BooleanOp.OR);
-            shape = Shapes.join(shape, Shapes.box(0, 0.8125, 0.1875, 0.1875, 1, 1), BooleanOp.OR);
-            shape = Shapes.join(shape, Shapes.box(0.1875, 0.8125, 0.1875, 0.875, 0.875, 1), BooleanOp.OR);
-            shape = Shapes.join(shape, Shapes.box(0.875, 0.8125, 0.1875, 1, 0.9375, 1), BooleanOp.OR);
+            shape = Shapes.join(shape, Shapes.box(0.125, 0, 0.125, 1, 0.0625, 1), BooleanOp.OR);
+            shape = Shapes.join(shape, Shapes.box(0.1875, 0.0625, 0.1875, 0.9375, 0.25, 0.9375), BooleanOp.OR);
             return shape;
         };
         public static final Map<Direction, VoxelShape> SHAPE = Util.make(new HashMap<>(), map -> {
@@ -350,39 +337,30 @@ public class RichBisonBBQPlateBlock extends HorizontalDirectionalBlock {
             }
         });
 
-        public BBQPlateRightBlock(Properties properties, int maxBites, FoodProperties foodComponent) {
-            super(properties, maxBites, foodComponent);
-            this.registerDefaultState(this.defaultBlockState().setValue(BITES, 0));
+        public BBQPlateRightBlock(Properties properties, FoodProperties foodComponent) {
+            super(properties, foodComponent);
+            this.registerDefaultState(this.defaultBlockState().setValue(BITES, 4).setValue(FACING, Direction.NORTH));
         }
 
         @Override
-        public void onRemove(BlockState blockState, Level level, BlockPos blockPos, BlockState blockState2, boolean bl) {
-            Direction facing = blockState.getValue(FACING);
-            BlockPos backPos = blockPos.relative(facing.getOpposite());
-            BlockPos sidePos = blockPos.relative(facing.getClockWise());
-            BlockPos diagonalPos = sidePos.relative(facing.getOpposite());
+        public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean moved) {
+            if (!state.is(newState.getBlock())) {
+                Direction facing = state.getValue(FACING);
+                BlockPos mainPos = pos.relative(facing.getClockWise());
+                BlockPos backPos = pos.relative(facing.getOpposite());
+                BlockPos diagonalPos = backPos.relative(facing.getClockWise());
 
-            level.removeBlock(backPos, false);
-            level.removeBlock(sidePos, false);
-            level.removeBlock(diagonalPos, false);
-            level.removeBlock(blockPos, false);
-
-            super.onRemove(blockState, level, blockPos, blockState2, bl);
-        }
-
-        @Override
-        protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-            super.createBlockStateDefinition(builder);
+                level.removeBlock(mainPos, false);
+                level.removeBlock(backPos, false);
+                level.removeBlock(diagonalPos, false);
+                super.onRemove(state, level, pos, newState, moved);
+            }
         }
 
         @Override
         public @NotNull VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
             Direction facing = state.getValue(FACING);
             return SHAPE.get(facing);
-        }
-
-        static {
-            BITES = IntegerProperty.create("bites", 0, 3);
         }
     }
 }

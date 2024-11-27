@@ -8,7 +8,6 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.food.Foods;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -64,10 +63,10 @@ public class ObjectRegistry {
 
 
 
-    public static final RegistrySupplier<Block> RICH_BISON_BBQ_PLATE_HEAD = registerWithoutItem("rich_bison_bbq_plate_head", () -> new RichBisonBBQPlateBlock.BBQPlateHeadBlock(BlockBehaviour.Properties.copy(Blocks.CAKE).pushReaction(PushReaction.IGNORE).instabreak(), 4, SafariBanquetFoodProperties.RICH_BISON_BBQ_PLATE));
-    public static final RegistrySupplier<Block> RICH_BISON_BBQ_PLATE_HEAD_RIGHT = registerWithoutItem("rich_bison_bbq_plate_head_right", () -> new RichBisonBBQPlateBlock.BBQPlateHeadRightBlock(BlockBehaviour.Properties.copy(Blocks.CAKE).pushReaction(PushReaction.IGNORE).instabreak(), 4, SafariBanquetFoodProperties.RICH_BISON_BBQ_PLATE));
-    public static final RegistrySupplier<Block> RICH_BISON_BBQ_PLATE_MAIN = registerWithItem("rich_bison_bbq_plate_main", () -> new RichBisonBBQPlateBlock.BBQPlateMainBlock(BlockBehaviour.Properties.copy(Blocks.CAKE).pushReaction(PushReaction.IGNORE).instabreak(), 4, SafariBanquetFoodProperties.RICH_BISON_BBQ_PLATE));
-    public static final RegistrySupplier<Block> RICH_BISON_BBQ_PLATE_RIGHT = registerWithoutItem("rich_bison_bbq_plate_right", () -> new RichBisonBBQPlateBlock.BBQPlateRightBlock(BlockBehaviour.Properties.copy(Blocks.CAKE).pushReaction(PushReaction.IGNORE).instabreak(), 4, SafariBanquetFoodProperties.RICH_BISON_BBQ_PLATE));
+    public static final RegistrySupplier<Block> RICH_BISON_BBQ_PLATE_HEAD = registerWithoutItem("rich_bison_bbq_plate_head", () -> new RichBisonBBQPlateBlock.BBQPlateHeadBlock(BlockBehaviour.Properties.copy(Blocks.CAKE).pushReaction(PushReaction.IGNORE).instabreak(), SafariBanquetFoodProperties.RICH_BISON_BBQ_PLATE));
+    public static final RegistrySupplier<Block> RICH_BISON_BBQ_PLATE_HEAD_RIGHT = registerWithoutItem("rich_bison_bbq_plate_head_right", () -> new RichBisonBBQPlateBlock.BBQPlateHeadRightBlock(BlockBehaviour.Properties.copy(Blocks.CAKE).pushReaction(PushReaction.IGNORE).instabreak(), SafariBanquetFoodProperties.RICH_BISON_BBQ_PLATE));
+    public static final RegistrySupplier<Block> RICH_BISON_BBQ_PLATE_MAIN = registerWithItem("rich_bison_bbq_plate_main", () -> new RichBisonBBQPlateBlock.BBQPlateMainBlock(BlockBehaviour.Properties.copy(Blocks.CAKE).pushReaction(PushReaction.IGNORE).instabreak(), SafariBanquetFoodProperties.RICH_BISON_BBQ_PLATE));
+    public static final RegistrySupplier<Block> RICH_BISON_BBQ_PLATE_RIGHT = registerWithoutItem("rich_bison_bbq_plate_right", () -> new RichBisonBBQPlateBlock.BBQPlateRightBlock(BlockBehaviour.Properties.copy(Blocks.CAKE).pushReaction(PushReaction.IGNORE).instabreak(), SafariBanquetFoodProperties.RICH_BISON_BBQ_PLATE));
 
     public static void init() {
         ITEMS.register();
