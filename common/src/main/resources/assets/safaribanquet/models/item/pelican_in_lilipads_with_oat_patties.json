@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "safaribanquet:item/pelican_in_lilipads_with_oat_patties"
+  }
+}

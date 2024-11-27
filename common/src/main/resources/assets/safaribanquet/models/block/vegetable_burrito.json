@@ -1,0 +1,52 @@
+{
+	"credit": "Made by Satisfy",
+	"textures": {
+		"1": "safaribanquet:block/plate",
+		"2": "safaribanquet:block/burrito_veggies",
+		"3": "safaribanquet:block/burrito_flatbread",
+		"particle": "safaribanquet:block/burrito_flatbread"
+	},
+	"elements": [
+		{
+			"name": "plate",
+			"from": [1, 0, 1],
+			"to": [15, 1, 15],
+			"rotation": {"angle": 0, "axis": "y", "origin": [1, 0, 1]},
+			"faces": {
+				"north": {"uv": [1, 14, 15, 15], "texture": "#1"},
+				"east": {"uv": [1, 14, 15, 15], "texture": "#1"},
+				"south": {"uv": [1, 14, 15, 15], "texture": "#1"},
+				"west": {"uv": [1, 14, 15, 15], "texture": "#1"},
+				"up": {"uv": [1, 1, 15, 15], "texture": "#1"},
+				"down": {"uv": [1, 1, 15, 15], "texture": "#1"}
+			}
+		},
+		{
+			"name": "flatbread",
+			"from": [2, 1.1, 2],
+			"to": [14, 1.1, 14],
+			"rotation": {"angle": 0, "axis": "y", "origin": [2, 7, 2]},
+			"faces": {
+				"up": {"uv": [14, 14, 2, 2], "texture": "#3"}
+			}
+		},
+		{
+			"name": "veggies",
+			"from": [2, 1.25, 2],
+			"to": [14, 1.25, 14],
+			"rotation": {"angle": 0, "axis": "y", "origin": [2, 6.25, 2]},
+			"faces": {
+				"up": {"uv": [2, 2, 14, 14], "texture": "#2"}
+			}
+		}
+	],
+	"groups": [
+		0,
+		{
+			"name": "burrito",
+			"origin": [8, 1, 4],
+			"color": 0,
+			"children": [1, 2]
+		}
+	]
+}

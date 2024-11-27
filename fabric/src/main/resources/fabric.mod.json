@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "safaribanquet",
+  "version": "${version}",
+  "name": "Safari Banquet",
+  "description": "This is an example description! Tell everyone what your mod is about!",
+  "authors": [
+    "satisfy"
+  ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/FabricMC/fabric-example-mod"
+  },
+  "license": "Insert License Here",
+  "icon": "pack.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.satisfy.safaribanquet.fabric.SafariBanquetFabric"
+    ],
+    "client": [
+      "net.satisfy.safaribanquet.fabric.client.SafariBanquetFabricClient"
+    ]
+  },
+  "depends": {
+    "fabric": "*",
+    "minecraft": ">=1.20.1",
+    "architectury": ">=9.1.12",
+    "wildernature": "*",
+    "farm_and_charm": "*"
+
+  }
+}

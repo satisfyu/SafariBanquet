@@ -1,0 +1,28 @@
+{
+  "creative_tab.safaribanquet": "Safari Banquet",
+  "tooltip.safaribanquet.cake_1": "§e[Right-Click]§r to pick it up",
+  "tooltip.safaribanquet.cake_2": "§e[Right-Click]§r with a §a[Knife]§r to cut",
+  "tooltip.safaribanquet.cake_3": "§e[Shift Right-Click]§r to eat",
+  "tooltip.safaribanquet.canbeplaced": "Can be placed",
+  "block.safaribanquet.porkchop_with_truffles_block": "Porkchop with Truffles",
+  "block.safaribanquet.turkey_on_a_bed_of_shrooms_block": "Turkey On A Bed Of Shrooms",
+  "block.safaribanquet.pelican_in_lilipads_with_oat_patties_block": "Pelican In Lilipads with Oat Patties",
+  "block.safaribanquet.bison_burger_block": "Bison Burger",
+  "block.safaribanquet.pelican_potroast_block": "Pelican Potroast",
+  "block.safaribanquet.turkey_with_vegetables_block": "Turkey with Vegetables",
+  "block.safaribanquet.venison_with_pasta_and_sauce_block": "Venison with Pasta and Sauce",
+  "block.safaribanquet.rich_bison_bbq_plate_main": "Rich Bison Barbecue",
+  "block.safaribanquet.burrito_flatbread": "Burrito Flatbread",
+
+  "block.safaribanquet.hazelnut_cake_block": "Hazelnut Cake",
+  "item.safaribanquet.hazelnut_cake_slice": "Hazelnut Cake Slice",
+  "item.safaribanquet.minced_cassowary_meat": "Minced Cassowary Meat",
+  "item.safaribanquet.burrito_beef": "Burrito Beef",
+  "item.safaribanquet.vegetable_burrito": "Vegetable Burrito",
+  "item.safaribanquet.combo_burrito": "Combo Burrito",
+  "item.safaribanquet.cassowary_burrito": "Cassowary Burrito",
+  "item.safaribanquet.dried_venison": "Dried Venison",
+
+  "effect.safaribanquet.repulsion": "Repulsion",
+  "effect.safaribanquet.water_walking": "Water Walking"
+}

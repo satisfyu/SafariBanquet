@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "meat=false,vegetables=false": {
+      "model": "safaribanquet:block/burrito_flatbread"
+    },
+    "meat=true,vegetables=false": {
+      "model": "safaribanquet:block/meat_burrito"
+    },
+    "meat=false,vegetables=true": {
+      "model": "safaribanquet:block/vegetable_burrito"
+    },
+    "meat=true,vegetables=true": {
+      "model": "safaribanquet:block/combo_burrito"
+    }
+  }
+}

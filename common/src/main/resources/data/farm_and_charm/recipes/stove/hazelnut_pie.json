@@ -1,0 +1,14 @@
+{
+  "type": "farm_and_charm:stove",
+  "ingredients": [
+    {
+      "item": "wildernature:hazelnut"
+    },
+    {
+      "item": "bakery:sweet_dough"
+    }
+  ],
+  "item": "safaribanquet:hazelnut_pie",
+  "count": 1,
+  "experience": 0.35
+}

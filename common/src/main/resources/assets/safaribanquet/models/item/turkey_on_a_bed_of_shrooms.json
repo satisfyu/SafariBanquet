@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "safaribanquet:item/turkey_on_a_bed_of_shrooms"
+  }
+}
