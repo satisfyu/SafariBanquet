@@ -1,4 +1,4 @@
-package net.satisfy.safaribanquet.registry;
+package net.satisfy.safaribanquet.core.registry;
 
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
@@ -33,6 +33,8 @@ public class TabRegistry {
                 out.accept(ObjectRegistry.CASSOWARY_BURRITO.get());
                 out.accept(ObjectRegistry.COMBO_BURRITO.get());
                 out.accept(ObjectRegistry.DRIED_VENISON.get());
+                out.accept(ObjectRegistry.MEAL_TOKEN.get());
+                out.accept(ObjectRegistry.GRANNYS_GOURMET_GRIMOIRE.get());
             })
             .build());
 

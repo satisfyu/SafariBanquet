@@ -1,4 +1,4 @@
-package net.satisfy.safaribanquet.registry;
+package net.satisfy.safaribanquet.core.registry;
 
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.Registrar;
@@ -13,16 +13,19 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.PushReaction;
-import net.satisfy.farm_and_charm.block.FoodBlock;
-import net.satisfy.farm_and_charm.item.food.EffectBlockItem;
-import net.satisfy.farm_and_charm.item.food.EffectFoodItem;
-import net.satisfy.farm_and_charm.item.food.EffectItem;
-import net.satisfy.farm_and_charm.registry.MobEffectRegistry;
+import net.satisfy.farm_and_charm.core.block.FoodBlock;
+import net.satisfy.farm_and_charm.core.item.food.EffectBlockItem;
+import net.satisfy.farm_and_charm.core.item.food.EffectFoodItem;
+import net.satisfy.farm_and_charm.core.item.food.EffectItem;
+import net.satisfy.farm_and_charm.core.registry.MobEffectRegistry;
 import net.satisfy.safaribanquet.SafariBanquet;
-import net.satisfy.safaribanquet.block.*;
-import net.satisfy.safaribanquet.util.SafariBanquetFoodProperties;
-import net.satisfy.safaribanquet.util.SafariBanquetIdentifier;
-import net.satisfy.safaribanquet.util.SafariBanquetUtil;
+import net.satisfy.safaribanquet.core.block.BurritoBlock;
+import net.satisfy.safaribanquet.core.block.HazelnutCakeBlock;
+import net.satisfy.safaribanquet.core.block.RichBisonBBQPlateBlock;
+import net.satisfy.safaribanquet.core.item.GrannysGourmetGrimoire;
+import net.satisfy.safaribanquet.core.util.SafariBanquetFoodProperties;
+import net.satisfy.safaribanquet.core.util.SafariBanquetIdentifier;
+import net.satisfy.safaribanquet.core.util.SafariBanquetUtil;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -52,21 +55,18 @@ public class ObjectRegistry {
     public static final RegistrySupplier<Item> TURKEY_WITH_VEGETABLES_ITEM = registerItem("turkey_with_vegetables", () -> new EffectBlockItem(TURKEY_WITH_VEGETABLES_BLOCK.get(), getFoodItemSettings(8, 0.8f, MobEffectRegistry.FEAST.get(), 4800)));
     public static final RegistrySupplier<Block> VENISON_WITH_PASTA_AND_SAUCE_BLOCK = registerWithoutItem("venison_with_pasta_and_sauce_block", () -> new FoodBlock(BlockBehaviour.Properties.copy(Blocks.CAKE), 4, SafariBanquetFoodProperties.VENISON_WITH_PASTA_AND_SAUCE));
     public static final RegistrySupplier<Item> VENISON_WITH_PASTA_AND_SAUCE_ITEM = registerItem("venison_with_pasta_and_sauce", () -> new EffectBlockItem(VENISON_WITH_PASTA_AND_SAUCE_BLOCK.get(), getFoodItemSettings(8, 0.8f, MobEffects.INVISIBILITY, 1200)));
-
-
     public static final RegistrySupplier<Item> BURRITO_BEEF = registerItem("burrito_beef", () -> new EffectItem(getFoodItemSettings(6, 0.6f, MobEffectRegistry.RESTED.get(), 1800), 900, true));
     public static final RegistrySupplier<Block> BURRITO_FLATBREAD = registerWithItem("burrito_flatbread", () -> new BurritoBlock(BlockBehaviour.Properties.copy(Blocks.CAKE)));
     public static final RegistrySupplier<Item> COMBO_BURRITO = registerItem("combo_burrito", () -> new EffectItem(getFoodItemSettings(6, 0.6f, MobEffectRegistry.RESTED.get(), 1800), 1800, false));
     public static final RegistrySupplier<Item> CASSOWARY_BURRITO = registerItem("cassowary_burrito", () -> new EffectItem(getFoodItemSettings(6, 0.6f, MobEffectRegistry.RESTED.get(), 1800), 1800, false));
     public static final RegistrySupplier<Item> VEGETABLE_BURRITO = registerItem("vegetable_burrito", () -> new EffectItem(getFoodItemSettings(6, 0.6f, MobEffectRegistry.RESTED.get(), 1800), 1800, false));
     public static final RegistrySupplier<Item> DRIED_VENISON = registerItem("dried_venison", () -> new EffectFoodItem(getFoodItemSettings(6, 0.6f, MobEffectRegistry.SATIATION.get(), 900), 900));
-
-
-
     public static final RegistrySupplier<Block> RICH_BISON_BBQ_PLATE_HEAD = registerWithoutItem("rich_bison_bbq_plate_head", () -> new RichBisonBBQPlateBlock.BBQPlateHeadBlock(BlockBehaviour.Properties.copy(Blocks.CAKE).pushReaction(PushReaction.IGNORE).instabreak(), SafariBanquetFoodProperties.RICH_BISON_BBQ_PLATE));
     public static final RegistrySupplier<Block> RICH_BISON_BBQ_PLATE_HEAD_RIGHT = registerWithoutItem("rich_bison_bbq_plate_head_right", () -> new RichBisonBBQPlateBlock.BBQPlateHeadRightBlock(BlockBehaviour.Properties.copy(Blocks.CAKE).pushReaction(PushReaction.IGNORE).instabreak(), SafariBanquetFoodProperties.RICH_BISON_BBQ_PLATE));
     public static final RegistrySupplier<Block> RICH_BISON_BBQ_PLATE_MAIN = registerWithItem("rich_bison_bbq_plate_main", () -> new RichBisonBBQPlateBlock.BBQPlateMainBlock(BlockBehaviour.Properties.copy(Blocks.CAKE).pushReaction(PushReaction.IGNORE).instabreak(), SafariBanquetFoodProperties.RICH_BISON_BBQ_PLATE));
     public static final RegistrySupplier<Block> RICH_BISON_BBQ_PLATE_RIGHT = registerWithoutItem("rich_bison_bbq_plate_right", () -> new RichBisonBBQPlateBlock.BBQPlateRightBlock(BlockBehaviour.Properties.copy(Blocks.CAKE).pushReaction(PushReaction.IGNORE).instabreak(), SafariBanquetFoodProperties.RICH_BISON_BBQ_PLATE));
+    public static final RegistrySupplier<Item> MEAL_TOKEN = registerItem("meal_token", () -> new Item(getSettings()));
+    public static final RegistrySupplier<Item> GRANNYS_GOURMET_GRIMOIRE = registerItem("grannys_gourmet_grimoire", () -> new GrannysGourmetGrimoire(getSettings()));
 
     public static void init() {
         ITEMS.register();

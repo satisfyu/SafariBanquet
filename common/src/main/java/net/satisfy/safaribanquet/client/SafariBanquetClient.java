@@ -5,7 +5,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.renderer.RenderType;
 
-import static net.satisfy.safaribanquet.registry.ObjectRegistry.*;
+import static net.satisfy.safaribanquet.core.registry.ObjectRegistry.*;
 
 @Environment(EnvType.CLIENT)
 public class SafariBanquetClient {

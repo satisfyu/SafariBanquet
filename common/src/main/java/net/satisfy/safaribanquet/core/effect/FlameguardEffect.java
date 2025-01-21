@@ -1,4 +1,4 @@
-package net.satisfy.safaribanquet.effect;
+package net.satisfy.safaribanquet.core.effect;
 
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;

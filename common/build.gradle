@@ -11,9 +11,6 @@ dependencies {
     modImplementation "maven.modrinth:lets-do-farm-charm:${project.farm_and_charm_version}-fabric"
     modCompileOnlyApi("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
     modApi "dev.architectury:architectury:${rootProject.architectury_version}"
-
-    modImplementation "maven.modrinth:do-api:${project.doapi_version}-fabric"
-
 }
 
 publishing {

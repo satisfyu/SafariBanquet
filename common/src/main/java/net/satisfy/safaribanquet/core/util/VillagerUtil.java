@@ -1,0 +1,81 @@
+package net.satisfy.safaribanquet.core.util;
+
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.npc.VillagerTrades;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.trading.MerchantOffer;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Block;
+import net.satisfy.safaribanquet.core.registry.ObjectRegistry;
+
+public class VillagerUtil {
+    public VillagerUtil() {
+    }
+
+    public static class SellItemFactory implements VillagerTrades.ItemListing {
+        private final ItemStack sell;
+        private final int price;
+        private final int count;
+        private final int maxUses;
+        private final int experience;
+        private final float multiplier;
+
+        public SellItemFactory(Block block, int price, int count, int maxUses, int experience) {
+            this(new ItemStack(block), price, count, maxUses, experience);
+        }
+
+        public SellItemFactory(Block item, int price, int count, int experience) {
+            this((ItemStack)(new ItemStack(item)), price, count, 12, experience);
+        }
+
+        public SellItemFactory(Item item, int price, int count, int experience) {
+            this((ItemStack)(new ItemStack(item)), price, count, 12, experience);
+        }
+
+        public SellItemFactory(Item item, int price, int count, int maxUses, int experience) {
+            this(new ItemStack(item), price, count, maxUses, experience);
+        }
+
+        public SellItemFactory(ItemStack stack, int price, int count, int maxUses, int experience) {
+            this(stack, price, count, maxUses, experience, 0.05F);
+        }
+
+        public SellItemFactory(ItemStack stack, int price, int count, int maxUses, int experience, float multiplier) {
+            this.sell = stack;
+            this.price = price;
+            this.count = count;
+            this.maxUses = maxUses;
+            this.experience = experience;
+            this.multiplier = multiplier;
+        }
+
+        public MerchantOffer getOffer(Entity entity, RandomSource random) {
+            ItemStack currency = new ItemStack(ObjectRegistry.RICH_BISON_BBQ_PLATE_HEAD.get(), this.price);
+            return new MerchantOffer(currency, new ItemStack(this.sell.getItem(), this.count), this.maxUses, this.experience, this.multiplier);
+        }
+    }
+
+    public static class BuyForOneEmeraldFactory implements VillagerTrades.ItemListing {
+        private final Item buy;
+        private final int price;
+        private final int maxUses;
+        private final int experience;
+        private final float multiplier;
+
+        public BuyForOneEmeraldFactory(ItemLike item, int price, int maxUses, int experience) {
+            this.buy = item.asItem();
+            this.price = price;
+            this.maxUses = maxUses;
+            this.experience = experience;
+            this.multiplier = 0.05F;
+        }
+
+        public MerchantOffer getOffer(Entity entity, RandomSource random) {
+            ItemStack itemStack = new ItemStack(this.buy, this.price);
+            ItemStack currency = new ItemStack(ObjectRegistry.MEAL_TOKEN.get());
+            return new MerchantOffer(itemStack, currency, this.maxUses, this.experience, this.multiplier);
+        }
+    }
+}

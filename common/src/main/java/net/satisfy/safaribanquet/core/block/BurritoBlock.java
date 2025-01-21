@@ -1,4 +1,4 @@
-package net.satisfy.safaribanquet.block;
+package net.satisfy.safaribanquet.core.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -16,8 +16,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.entity.player.Player;
-import net.satisfy.safaribanquet.registry.ObjectRegistry;
-import net.satisfy.safaribanquet.registry.TagsRegistry;
+import net.satisfy.safaribanquet.core.registry.ObjectRegistry;
+import net.satisfy.safaribanquet.core.registry.TagsRegistry;
 import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("deprecation")

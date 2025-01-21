@@ -1,4 +1,4 @@
-package net.satisfy.safaribanquet.util;
+package net.satisfy.safaribanquet.core.util;
 
 import net.minecraft.world.food.FoodProperties;
 

@@ -1,0 +1,19 @@
+{
+  "criteria": {
+    "book_clicked": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "safaribanquet:grannys_gourmet_grimoire"
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "farm_and_charm:stove/hazelnut_pie"
+    ]
+  }
+}

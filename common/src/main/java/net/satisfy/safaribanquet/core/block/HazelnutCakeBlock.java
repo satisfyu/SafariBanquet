@@ -1,7 +1,6 @@
-package net.satisfy.safaribanquet.block;
+package net.satisfy.safaribanquet.core.block;
 
 import com.mojang.datafixers.util.Pair;
-import de.cristelknight.doapi.common.util.GeneralUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -31,8 +30,9 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.satisfy.safaribanquet.registry.TagsRegistry;
-import net.satisfy.safaribanquet.util.SafariBanquetUtil;
+import net.satisfy.farm_and_charm.core.util.GeneralUtil;
+import net.satisfy.safaribanquet.core.registry.TagsRegistry;
+import net.satisfy.safaribanquet.core.util.SafariBanquetUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;

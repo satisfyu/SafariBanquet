@@ -1,4 +1,4 @@
-package net.satisfy.safaribanquet.util;
+package net.satisfy.safaribanquet.core.util;
 
 import dev.architectury.platform.Platform;
 import dev.architectury.registry.registries.DeferredRegister;
