@@ -1,0 +1,22 @@
+{
+    "pools": [
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "wildernature:blunderbuss"
+                }
+            ]
+        },
+        {
+            "rolls": 8,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "safaribanquet:food_stamp"
+                }
+            ]
+        }
+    ]
+}

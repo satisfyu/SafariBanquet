@@ -1,0 +1,22 @@
+{
+    "pools": [
+        {
+            "rolls": 32,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "wildernature:truffle"
+                }
+            ]
+        },
+        {
+            "rolls": 2,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "safaribanquet:food_stamp"
+                }
+            ]
+        }
+    ]
+}

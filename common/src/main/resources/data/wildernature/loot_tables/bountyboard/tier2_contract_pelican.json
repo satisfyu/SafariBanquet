@@ -1,0 +1,22 @@
+{
+    "pools": [
+        {
+            "rolls": 11,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "wildernature:pelican_meat"
+                }
+            ]
+        },
+        {
+            "rolls": 4,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "safaribanquet:food_stamp"
+                }
+            ]
+        }
+    ]
+}

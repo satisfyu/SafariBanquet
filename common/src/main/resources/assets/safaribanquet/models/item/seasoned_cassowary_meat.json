@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "safaribanquet:item/meal_token"
+    "layer0": "safaribanquet:item/seasoned_cassowary_meat"
   }
 }

@@ -16,6 +16,7 @@ public class TabRegistry {
             .icon(() -> new ItemStack(ObjectRegistry.PELICAN_IN_LILIPADS_WITH_OAT_PATTIES_ITEM.get()))
             .title(Component.translatable("creative_tab.safaribanquet"))
             .displayItems((parameters, out) -> {
+                out.accept(ObjectRegistry.FOOD_STAMP_EXCHANCE_TABLE.get());
                 out.accept(ObjectRegistry.MINCED_CASSOWARY_MEAT.get());
                 out.accept(ObjectRegistry.SEASONED_CASSOWARY_MEAT.get());
                 out.accept(ObjectRegistry.BISON_BURGER_ITEM.get());
@@ -32,15 +33,15 @@ public class TabRegistry {
                 out.accept(ObjectRegistry.VEGETABLE_BURRITO.get());
                 out.accept(ObjectRegistry.CASSOWARY_BURRITO.get());
                 out.accept(ObjectRegistry.COMBO_BURRITO.get());
-                out.accept(ObjectRegistry.MEAL_TOKEN.get());
-                out.accept(ObjectRegistry.SEASONED_CASSOWARY_MEAT_RECIPE_BOOK_STACK);
-                out.accept(ObjectRegistry.TURKEY_ON_A_BED_OF_SHROOMS_RECIPE_BOOK_STACK);
-                out.accept(ObjectRegistry.HAZELNUT_PIE_RECIPE_BOOK_STACK);
-                out.accept(ObjectRegistry.PORKCHOP_WITH_TRUFFLES_RECIPE_BOOK_STACK);
-                out.accept(ObjectRegistry.VENISON_WITH_POTATOES_RECIPE_BOOK_STACK);
-                out.accept(ObjectRegistry.PELICAN_POTROAST_RECIPE_BOOK_STACK);
-                out.accept(ObjectRegistry.TURKEY_WITH_VEGETABLES_RECIPE_BOOK_STACK);
-                out.accept(ObjectRegistry.PELICAN_IN_LILIPADS_WITH_OAT_PATTIES_RECIPE_BOOK_STACK);
+                out.accept(ObjectRegistry.FOOD_STAMP.get());
+                out.accept(ObjectRegistry.HAZELNUT_PIE_RECIPE_BOOK_STACK.get());
+                out.accept(ObjectRegistry.PELICAN_IN_LILIPADS_WITH_OAT_PATTIES_RECIPE_BOOK_STACK.get());
+                out.accept(ObjectRegistry.TURKEY_ON_A_BED_OF_SHROOMS_RECIPE_BOOK_STACK.get());
+                out.accept(ObjectRegistry.PORKCHOP_WITH_TRUFFLES_RECIPE_BOOK_STACK.get());
+                out.accept(ObjectRegistry.TURKEY_WITH_VEGETABLES_RECIPE_BOOK_STACK.get());
+                out.accept(ObjectRegistry.VENISON_WITH_POTATOES_RECIPE_BOOK_STACK.get());
+                out.accept(ObjectRegistry.SEASONED_CASSOWARY_MEAT_RECIPE_BOOK_STACK.get());
+                out.accept(ObjectRegistry.PELICAN_POTROAST_RECIPE_BOOK_STACK.get());
             })
             .build());
 

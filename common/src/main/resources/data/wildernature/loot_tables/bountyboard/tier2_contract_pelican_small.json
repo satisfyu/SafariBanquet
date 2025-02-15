@@ -1,0 +1,22 @@
+{
+    "pools": [
+        {
+            "rolls": 7,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "wildernature:fish_oil"
+                }
+            ]
+        },
+        {
+            "rolls": 2,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "safaribanquet:food_stamp"
+                }
+            ]
+        }
+    ]
+}

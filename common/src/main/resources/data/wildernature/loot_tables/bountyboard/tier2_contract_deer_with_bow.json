@@ -1,0 +1,22 @@
+{
+    "pools": [
+        {
+            "rolls": 44,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "minecraft:arrow"
+                }
+            ]
+        },
+        {
+            "rolls": 4,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "safaribanquet:food_stamp"
+                }
+            ]
+        }
+    ]
+}

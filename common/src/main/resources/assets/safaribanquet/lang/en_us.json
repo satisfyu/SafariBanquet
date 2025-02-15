@@ -4,6 +4,7 @@
   "tooltip.safaribanquet.cake_2": "§e[Right-Click]§r with a §a[Knife]§r to cut",
   "tooltip.safaribanquet.cake_3": "§e[Shift Right-Click]§r to eat",
   "tooltip.safaribanquet.canbeplaced": "Can be placed",
+  "block.safaribanquet.food_stamp_exchance_table": "Food Stamp Exchance Table",
   "block.safaribanquet.porkchop_with_truffles_block": "Porkchop with Truffles",
   "block.safaribanquet.turkey_on_a_bed_of_shrooms_block": "Turkey On A Bed Of Shrooms",
   "block.safaribanquet.pelican_in_lilipads_with_oat_patties_block": "Pelican In Lilipads with Oat Patties",
@@ -13,7 +14,6 @@
   "block.safaribanquet.venison_with_potatoes_block": "Venison with Potatoes",
   "block.safaribanquet.rich_bison_bbq_plate_main": "Rich Bison Barbecue",
   "block.safaribanquet.burrito_flatbread": "Burrito Flatbread",
-
   "block.safaribanquet.hazelnut_pie": "Hazelnut Pie",
   "item.safaribanquet.hazelnut_pie_slice": "Hazelnut Pie Slice",
   "item.safaribanquet.minced_cassowary_meat": "Minced Cassowary Meat",
@@ -22,8 +22,17 @@
   "item.safaribanquet.combo_burrito": "Combo Burrito",
   "item.safaribanquet.cassowary_burrito": "Cassowary Burrito",
   "item.safaribanquet.dried_venison": "Dried Venison",
-
+  "item.safaribanquet.food_stamp": "Food Stamp",
   "effect.safaribanquet.flameguard": "Flameguard",
   "effect.safaribanquet.repulsion": "Repulsion",
-  "effect.safaribanquet.water_walking": "Water Walking"
+  "effect.safaribanquet.water_walking": "Water Walking",
+  "item.safaribanquet.hazelnut_pie_recipe_book": "Nana’s Timeless Secrets",
+  "item.safaribanquet.pelican_in_lilipads_with_oat_patties_recipe_book": "The Hearth & Hand Cookbook",
+  "item.safaribanquet.pelican_potroast_recipe_book": "Whispers of the Wooden Spoon",
+  "item.safaribanquet.porkchop_with_truffles_recipe_book": "The Forager’s Table",
+  "item.safaribanquet.seasoned_cassowary_meat_recipe_book": "Mysteries of the Open Fire",
+  "item.safaribanquet.turkey_on_a_bed_of_shrooms_recipe_book": "Grandmother’s Secret Feast",
+  "item.safaribanquet.turkey_with_vegetables_recipe_book": "Flavors of the Harvest",
+  "item.safaribanquet.venison_with_potatoes_recipe_book": "The Hunter’s Hearty Fare",
+  "entity.minecraft.villager.food_stamp_trader": "Food Stamp Trader"
 }

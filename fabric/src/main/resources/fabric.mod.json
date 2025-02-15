@@ -31,6 +31,5 @@
     "architectury": ">=9.1.12",
     "wildernature": "*",
     "farm_and_charm": "*"
-
   }
 }
