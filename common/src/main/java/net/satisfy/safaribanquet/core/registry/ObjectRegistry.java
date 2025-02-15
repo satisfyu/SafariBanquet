@@ -4,16 +4,20 @@ import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.Registrar;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.PushReaction;
 import net.satisfy.farm_and_charm.core.block.FoodBlock;
+import net.satisfy.farm_and_charm.core.item.GrandmothersRecipeBookItem;
 import net.satisfy.farm_and_charm.core.item.food.EffectBlockItem;
 import net.satisfy.farm_and_charm.core.item.food.EffectFoodItem;
 import net.satisfy.farm_and_charm.core.item.food.EffectItem;
@@ -22,15 +26,13 @@ import net.satisfy.safaribanquet.SafariBanquet;
 import net.satisfy.safaribanquet.core.block.BurritoBlock;
 import net.satisfy.safaribanquet.core.block.HazelnutCakeBlock;
 import net.satisfy.safaribanquet.core.block.RichBisonBBQPlateBlock;
-import net.satisfy.safaribanquet.core.item.GrannysGourmetGrimoire;
 import net.satisfy.safaribanquet.core.util.SafariBanquetFoodProperties;
 import net.satisfy.safaribanquet.core.util.SafariBanquetIdentifier;
 import net.satisfy.safaribanquet.core.util.SafariBanquetUtil;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
-
-
 
 public class ObjectRegistry {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(SafariBanquet.MOD_ID, Registries.ITEM);
@@ -66,7 +68,63 @@ public class ObjectRegistry {
     public static final RegistrySupplier<Block> RICH_BISON_BBQ_PLATE_MAIN = registerWithItem("rich_bison_bbq_plate_main", () -> new RichBisonBBQPlateBlock.BBQPlateMainBlock(BlockBehaviour.Properties.copy(Blocks.CAKE).pushReaction(PushReaction.IGNORE).instabreak(), SafariBanquetFoodProperties.RICH_BISON_BBQ_PLATE));
     public static final RegistrySupplier<Block> RICH_BISON_BBQ_PLATE_RIGHT = registerWithoutItem("rich_bison_bbq_plate_right", () -> new RichBisonBBQPlateBlock.BBQPlateRightBlock(BlockBehaviour.Properties.copy(Blocks.CAKE).pushReaction(PushReaction.IGNORE).instabreak(), SafariBanquetFoodProperties.RICH_BISON_BBQ_PLATE));
     public static final RegistrySupplier<Item> MEAL_TOKEN = registerItem("meal_token", () -> new Item(getSettings()));
-    public static final RegistrySupplier<Item> GRANNYS_GOURMET_GRIMOIRE = registerItem("grannys_gourmet_grimoire", () -> new GrannysGourmetGrimoire(getSettings()));
+
+
+
+    public static final RegistrySupplier<Item> TURKEY_ON_A_BED_OF_SHROOMS_UNLOCKER = registerItem("turkey_on_a_bed_of_shrooms_recipe_unlocker",
+            () -> new GrandmothersRecipeBookItem(getSettings()));
+
+    public static final RegistrySupplier<Item> PORKCHOP_WITH_TRUFFLES_UNLOCKER = registerItem("porkchop_with_truffles_recipe_unlocker",
+            () -> new GrandmothersRecipeBookItem(getSettings()));
+
+    public static final RegistrySupplier<Item> PELICAN_IN_LILIPADS_WITH_OAT_PATTIES_UNLOCKER = registerItem("pelican_in_lilipads_with_oat_patties_recipe_unlocker",
+            () -> new GrandmothersRecipeBookItem(getSettings()));
+
+    public static final RegistrySupplier<Item> BISON_BURGER_UNLOCKER = registerItem("bison_burger_recipe_unlocker",
+            () -> new GrandmothersRecipeBookItem(getSettings()));
+
+    public static final RegistrySupplier<Item> PELICAN_POTROAST_UNLOCKER = registerItem("pelican_potroast_recipe_unlocker",
+            () -> new GrandmothersRecipeBookItem(getSettings()));
+
+    public static final RegistrySupplier<Item> TURKEY_WITH_VEGETABLES_UNLOCKER = registerItem("turkey_with_vegetables_recipe_unlocker",
+            () -> new GrandmothersRecipeBookItem(getSettings()));
+
+    public static final RegistrySupplier<Item> VENISON_WITH_PASTA_AND_SAUCE_UNLOCKER = registerItem("venison_with_pasta_and_sauce_recipe_unlocker",
+            () -> new GrandmothersRecipeBookItem(getSettings()));
+
+    public static final RegistrySupplier<Item> BURRITO_BEEF_UNLOCKER = registerItem("burrito_beef_recipe_unlocker",
+            () -> new GrandmothersRecipeBookItem(getSettings()));
+
+    public static final RegistrySupplier<Item> DRIED_VENISON_UNLOCKER = registerItem("dried_venison_recipe_unlocker",
+            () -> new GrandmothersRecipeBookItem(getSettings()));
+
+    public static final RegistrySupplier<Item> TURKEY_ON_A_BED_OF_SHROOMS_BLOCK_UNLOCKER = registerItem("turkey_on_a_bed_of_shrooms_block_recipe_unlocker",
+            () -> new GrandmothersRecipeBookItem(getSettings()));
+
+    public static final RegistrySupplier<Item> PORKCHOP_WITH_TRUFFLES_BLOCK_UNLOCKER = registerItem("porkchop_with_truffles_block_recipe_unlocker",
+            () -> new GrandmothersRecipeBookItem(getSettings()));
+
+    public static final RegistrySupplier<Item> PELICAN_IN_LILIPADS_WITH_OAT_PATTIES_BLOCK_UNLOCKER = registerItem("pelican_in_lilipads_with_oat_patties_block_recipe_unlocker",
+            () -> new GrandmothersRecipeBookItem(getSettings()));
+
+    public static final RegistrySupplier<Item> BISON_BURGER_BLOCK_UNLOCKER = registerItem("bison_burger_block_recipe_unlocker",
+            () -> new GrandmothersRecipeBookItem(getSettings()));
+
+    public static final RegistrySupplier<Item> HAZELNUT_CAKE_BLOCK_UNLOCKER = registerItem("hazelnut_cake_block_recipe_unlocker",
+            () -> new GrandmothersRecipeBookItem(getSettings()));
+
+    public static final RegistrySupplier<Item> PELICAN_POTROAST_BLOCK_UNLOCKER = registerItem("pelican_potroast_block_recipe_unlocker",
+            () -> new GrandmothersRecipeBookItem(getSettings()));
+
+    public static final RegistrySupplier<Item> TURKEY_WITH_VEGETABLES_BLOCK_UNLOCKER = registerItem("turkey_with_vegetables_block_recipe_unlocker",
+            () -> new GrandmothersRecipeBookItem(getSettings()));
+
+    public static final RegistrySupplier<Item> VENISON_WITH_PASTA_AND_SAUCE_BLOCK_UNLOCKER = registerItem("venison_with_pasta_and_sauce_block_recipe_unlocker",
+            () -> new GrandmothersRecipeBookItem(getSettings()));
+
+    public static final RegistrySupplier<Item> RICH_BISON_BBQ_PLATE_MAIN_UNLOCKER = registerItem("rich_bison_bbq_plate_main_recipe_unlocker",
+            () -> new GrandmothersRecipeBookItem(getSettings()));
+
 
     public static void init() {
         ITEMS.register();

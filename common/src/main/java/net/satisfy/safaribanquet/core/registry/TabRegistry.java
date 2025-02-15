@@ -34,7 +34,7 @@ public class TabRegistry {
                 out.accept(ObjectRegistry.COMBO_BURRITO.get());
                 out.accept(ObjectRegistry.DRIED_VENISON.get());
                 out.accept(ObjectRegistry.MEAL_TOKEN.get());
-                out.accept(ObjectRegistry.GRANNYS_GOURMET_GRIMOIRE.get());
+                out.accept(ObjectRegistry.BISON_BURGER_BLOCK_UNLOCKER.get());
             })
             .build());
 
