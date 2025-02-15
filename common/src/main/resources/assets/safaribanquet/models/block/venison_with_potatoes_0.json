@@ -2,8 +2,7 @@
 	"credit": "Made by Satisfy",
 	"textures": {
 		"3": "safaribanquet:block/plate",
-		"4": "safaribanquet:block/venison_with_pasta_and_sauce_2",
-		"5": "safaribanquet:block/venison_with_pasta_and_sauce_1",
+		"5": "safaribanquet:block/venison_with_potatoes_1",
 		"particle": "safaribanquet:block/pelican_potroast_2"
 	},
 	"elements": [
@@ -14,19 +13,6 @@
 			"rotation": {"angle": 0, "axis": "y", "origin": [1, 0, 1]},
 			"faces": {
 				"up": {"uv": [1, 1, 15, 15], "texture": "#5"}
-			}
-		},
-		{
-			"name": "bite_2",
-			"from": [8, 1, 8],
-			"to": [13, 3, 13],
-			"rotation": {"angle": 0, "axis": "y", "origin": [8, 1, 8]},
-			"faces": {
-				"north": {"uv": [5, 4, 10, 6], "texture": "#4"},
-				"east": {"uv": [5, 2, 10, 4], "texture": "#4"},
-				"south": {"uv": [5, 0, 10, 2], "texture": "#4"},
-				"west": {"uv": [5, 2, 10, 4], "texture": "#4"},
-				"up": {"uv": [0, 0, 5, 5], "rotation": 180, "texture": "#4"}
 			}
 		},
 		{
@@ -49,8 +35,8 @@
 			"name": "venison",
 			"origin": [8, 8, 8],
 			"color": 0,
-			"children": [0, 1]
+			"children": [0]
 		},
-		2
+		1
 	]
 }

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "farm_and_charm:lettuce"
+    },
+    {
+      "item": "wildernature:cooked_bison_meat"
+    },
+    {
+      "tag": "minecraft:bread"
+    },
+    {
+      "tag": "farm_and_charm:tomato"
+    }
+  ],
+  "result": {
+    "item": "safaribanquet:bison_burger",
+    "count": 1
+  }
+}

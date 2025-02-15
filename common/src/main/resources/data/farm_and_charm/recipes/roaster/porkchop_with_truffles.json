@@ -1,0 +1,22 @@
+{
+  "type": "farm_and_charm:roaster",
+  "ingredients": [
+    {
+      "item": "minecraft:cooked_porkchop"
+    },
+    {
+      "item": "wildernature:truffle"
+    },
+    {
+      "tag": "farm_and_charm:butter"
+    }
+  ],
+  "container": {
+    "item": "minecraft:bowl"
+  },
+  "result": {
+    "item": "safaribanquet:porkchop_with_truffles",
+    "count": 2
+  },
+  "requiresLearning": true
+}

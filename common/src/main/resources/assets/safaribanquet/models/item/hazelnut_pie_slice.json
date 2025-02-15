@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "safaribanquet:item/hazelnut_cake"
+    "layer0": "safaribanquet:item/hazelnut_pie_slice"
   }
 }

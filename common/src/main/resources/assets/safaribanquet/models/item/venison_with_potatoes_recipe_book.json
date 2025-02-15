@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "safaribanquet:item/burrito_beef"
+    "layer0": "safaribanquet:item/nanas_timeless_secrets"
   }
 }

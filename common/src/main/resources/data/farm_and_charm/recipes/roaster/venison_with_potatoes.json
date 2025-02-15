@@ -1,0 +1,22 @@
+{
+  "type": "farm_and_charm:roaster",
+  "ingredients": [
+    {
+      "item": "minecraft:potato"
+    },
+    {
+      "item": "wildernature:venison"
+    },
+    {
+      "tag": "farm_and_charm:butter"
+    }
+  ],
+  "container": {
+    "item": "minecraft:bowl"
+  },
+  "result": {
+    "item": "safaribanquet:venison_with_potatoes",
+    "count": 2
+  },
+  "requiresLearning": true
+}

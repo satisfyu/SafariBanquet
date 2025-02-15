@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "safaribanquet:item/venison_with_pasta_and_sauce"
+    "layer0": "safaribanquet:item/grannys_gourmet_grimoire"
   }
 }

@@ -1,0 +1,29 @@
+{
+  "type": "farm_and_charm:roaster",
+  "ingredients": [
+    {
+      "item": "minecraft:potato"
+    },
+    {
+      "item": "wildernature:cooked_turkey_meat"
+    },
+    {
+      "tag": "farm_and_charm:butter"
+    },
+    {
+      "item": "minecraft:carrot"
+    },
+    {
+      "tag": "farm_and_charm:onion"
+    }
+  ],
+  "container": {
+    "item": "minecraft:bowl"
+  },
+  "result": {
+    "item": "safaribanquet:turkey_with_vegetables",
+    "count": 2
+  },
+  "requiresLearning": true
+}
+

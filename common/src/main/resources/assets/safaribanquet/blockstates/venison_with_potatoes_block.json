@@ -1,63 +1,63 @@
 {
   "variants": {
     "bites=0,facing=north": {
-      "model": "safaribanquet:block/venison_with_pasta_and_sauce_3"
+      "model": "safaribanquet:block/venison_with_potatoes_3"
     },
     "bites=0,facing=east": {
-      "model": "safaribanquet:block/venison_with_pasta_and_sauce_3",
+      "model": "safaribanquet:block/venison_with_potatoes_3",
       "y": 90
     },
     "bites=0,facing=south": {
-      "model": "safaribanquet:block/venison_with_pasta_and_sauce_3",
+      "model": "safaribanquet:block/venison_with_potatoes_3",
       "y": 180
     },
     "bites=0,facing=west": {
-      "model": "safaribanquet:block/venison_with_pasta_and_sauce_3",
+      "model": "safaribanquet:block/venison_with_potatoes_3",
       "y": 270
     },
     "bites=1,facing=west": {
-      "model": "safaribanquet:block/venison_with_pasta_and_sauce_2",
+      "model": "safaribanquet:block/venison_with_potatoes_2",
       "y": 270
     },
     "bites=1,facing=north": {
-      "model": "safaribanquet:block/venison_with_pasta_and_sauce_2"
+      "model": "safaribanquet:block/venison_with_potatoes_2"
     },
     "bites=1,facing=east": {
-      "model": "safaribanquet:block/venison_with_pasta_and_sauce_2",
+      "model": "safaribanquet:block/venison_with_potatoes_2",
       "y": 90
     },
     "bites=1,facing=south": {
-      "model": "safaribanquet:block/venison_with_pasta_and_sauce_2",
+      "model": "safaribanquet:block/venison_with_potatoes_2",
       "y": 180
     },
     "bites=2,facing=north": {
-      "model": "safaribanquet:block/venison_with_pasta_and_sauce_1"
+      "model": "safaribanquet:block/venison_with_potatoes_1"
     },
     "bites=2,facing=east": {
-      "model": "safaribanquet:block/venison_with_pasta_and_sauce_1",
+      "model": "safaribanquet:block/venison_with_potatoes_1",
       "y": 90
     },
     "bites=2,facing=south": {
-      "model": "safaribanquet:block/venison_with_pasta_and_sauce_1",
+      "model": "safaribanquet:block/venison_with_potatoes_1",
       "y": 180
     },
     "bites=2,facing=west": {
-      "model": "safaribanquet:block/venison_with_pasta_and_sauce_1",
+      "model": "safaribanquet:block/venison_with_potatoes_1",
       "y": 270
     },
     "bites=3,facing=north": {
-      "model": "safaribanquet:block/venison_with_pasta_and_sauce_0"
+      "model": "safaribanquet:block/venison_with_potatoes_0"
     },
     "bites=3,facing=east": {
-      "model": "safaribanquet:block/venison_with_pasta_and_sauce_0",
+      "model": "safaribanquet:block/venison_with_potatoes_0",
       "y": 90
     },
     "bites=3,facing=south": {
-      "model": "safaribanquet:block/venison_with_pasta_and_sauce_0",
+      "model": "safaribanquet:block/venison_with_potatoes_0",
       "y": 180
     },
     "bites=3,facing=west": {
-      "model": "safaribanquet:block/venison_with_pasta_and_sauce_0",
+      "model": "safaribanquet:block/venison_with_potatoes_0",
       "y": 270
     },
     "bites=4,facing=north": {

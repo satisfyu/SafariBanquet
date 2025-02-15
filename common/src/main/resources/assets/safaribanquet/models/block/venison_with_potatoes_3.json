@@ -3,8 +3,8 @@
 	"textures": {
 		"2": "safaribanquet:block/pelican_potroast_2",
 		"3": "safaribanquet:block/plate",
-		"4": "safaribanquet:block/venison_with_pasta_and_sauce_2",
-		"5": "safaribanquet:block/venison_with_pasta_and_sauce_1",
+		"4": "safaribanquet:block/venison_with_potatoes_2",
+		"5": "safaribanquet:block/venison_with_potatoes_1",
 		"particle": "safaribanquet:block/pelican_potroast_2"
 	},
 	"elements": [

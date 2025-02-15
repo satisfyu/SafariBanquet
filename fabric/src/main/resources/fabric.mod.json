@@ -22,6 +22,9 @@
       "net.satisfy.safaribanquet.fabric.client.SafariBanquetFabricClient"
     ]
   },
+  "mixins": [
+    "SafariBanquet-common.mixins.json"
+  ],
   "depends": {
     "fabric": "*",
     "minecraft": ">=1.20.1",

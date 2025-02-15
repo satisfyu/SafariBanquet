@@ -11,7 +11,10 @@
       "item": "farm_and_charm:butter"
     }
   ],
-  "item": "safaribanquet:hazelnut_cake_block",
-  "count": 1,
-  "experience": 0.5
+  "result": {
+    "item": "safaribanquet:hazelnut_pie",
+    "count": 1
+  },
+  "experience": 0.5,
+  "requiresLearning": true
 }

@@ -11,7 +11,7 @@ import static net.satisfy.safaribanquet.core.registry.ObjectRegistry.*;
 public class SafariBanquetClient {
 
     public static void onInitializeClient() {
-        RenderTypeRegistry.register(RenderType.cutout(), PELICAN_IN_LILIPADS_WITH_OAT_PATTIES_BLOCK.get(), TURKEY_ON_A_BED_OF_SHROOMS_BLOCK.get(), PORKCHOP_WITH_TRUFFLES_BLOCK.get(), BISON_BURGER_BLOCK.get(), PELICAN_POTROAST_BLOCK.get(), TURKEY_WITH_VEGETABLES_BLOCK.get(), VENISON_WITH_PASTA_AND_SAUCE_BLOCK.get(), BURRITO_FLATBREAD.get()
+        RenderTypeRegistry.register(RenderType.cutout(), PELICAN_IN_LILIPADS_WITH_OAT_PATTIES_BLOCK.get(), TURKEY_ON_A_BED_OF_SHROOMS_BLOCK.get(), PORKCHOP_WITH_TRUFFLES_BLOCK.get(), BISON_BURGER_BLOCK.get(), PELICAN_POTROAST_BLOCK.get(), TURKEY_WITH_VEGETABLES_BLOCK.get(), VENISON_WITH_POTATOES_BLOCK.get(), BURRITO_FLATBREAD.get()
         );
     }
 }

@@ -1,0 +1,22 @@
+{
+  "type": "farm_and_charm:pot_cooking",
+  "ingredients": [
+    {
+      "tag": "farm_and_charm:onion"
+    },
+    {
+      "item": "safaribanquet:minced_cassowary_meat"
+    }
+  ],
+  "container": {
+    "required": true,
+    "item": {
+      "item": "minecraft:bowl"
+    }
+  },
+  "result": {
+    "item": "safaribanquet:seasoned_cassowary_meat",
+    "count": 1
+  },
+  "requiresLearning": true
+}

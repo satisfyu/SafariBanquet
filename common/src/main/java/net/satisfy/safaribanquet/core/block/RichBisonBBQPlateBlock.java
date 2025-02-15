@@ -7,6 +7,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
@@ -26,6 +27,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.satisfy.safaribanquet.core.registry.ObjectRegistry;
+import net.satisfy.safaribanquet.core.registry.SBMobEffectRegistry;
 import net.satisfy.safaribanquet.core.util.SafariBanquetUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -38,26 +40,22 @@ import java.util.function.Supplier;
 public class RichBisonBBQPlateBlock extends HorizontalDirectionalBlock {
     public static final IntegerProperty BITES = IntegerProperty.create("bites", 0, 4);
     private final FoodProperties foodComponent;
-
     private static final Supplier<VoxelShape> VoxelShapeSupplier = () -> {
         VoxelShape shape = Shapes.empty();
         shape = Shapes.join(shape, Shapes.box(0, 0, 0.125, 0.875, 0.0625, 1), BooleanOp.OR);
         shape = Shapes.join(shape, Shapes.box(0.0625, 0.0625, 0.1875, 0.75, 0.3125, 1), BooleanOp.OR);
         return shape;
     };
-
     private static final Supplier<VoxelShape> BigVoxelShapeSupplier = () -> {
         VoxelShape shape = Shapes.empty();
         shape = Shapes.join(shape, Shapes.box(0, 0, 0.125, 0.875, 0.0625, 1), BooleanOp.OR);
         return shape;
     };
-
     public static final Map<Direction, VoxelShape> SHAPE = Util.make(new HashMap<>(), map -> {
         for (Direction direction : Direction.Plane.HORIZONTAL) {
             map.put(direction, SafariBanquetUtil.rotateShape(Direction.NORTH, direction, VoxelShapeSupplier.get()));
         }
     });
-
     public static final Map<Direction, VoxelShape> BIG_SHAPE = Util.make(new HashMap<>(), map -> {
         for (Direction direction : Direction.Plane.HORIZONTAL) {
             map.put(direction, SafariBanquetUtil.rotateShape(Direction.NORTH, direction, BigVoxelShapeSupplier.get()));
@@ -113,17 +111,15 @@ public class RichBisonBBQPlateBlock extends HorizontalDirectionalBlock {
             player.getFoodData().eat(foodComponent.getNutrition(), foodComponent.getSaturationModifier());
             world.playSound(null, pos, SoundEvents.GENERIC_EAT, SoundSource.PLAYERS, 0.5f, world.getRandom().nextFloat() * 0.1f + 0.9f);
             world.gameEvent(player, GameEvent.EAT, pos);
-
             int bites = state.getValue(BITES);
             if (bites > 0) {
                 world.setBlock(pos, state.setValue(BITES, bites - 1), 3);
                 spawnBlockBreakParticles(world, pos, state);
             }
-
             if (areAllBitesZero(world, pos, state)) {
                 setAllBitesZero(world, pos, state);
             }
-
+            player.addEffect(new MobEffectInstance(SBMobEffectRegistry.REPULSION.get(), 600, 0));
             return InteractionResult.SUCCESS;
         }
     }
@@ -138,7 +134,6 @@ public class RichBisonBBQPlateBlock extends HorizontalDirectionalBlock {
     private boolean areAllBitesZero(Level world, BlockPos pos, BlockState state) {
         Direction facing = state.getValue(FACING);
         BlockPos[] allPositions = getAllBlockPositions(pos, facing, state.getBlock());
-
         for (BlockPos blockPos : allPositions) {
             BlockState blockState = world.getBlockState(blockPos);
             if (blockState.getBlock() instanceof RichBisonBBQPlateBlock) {
@@ -150,14 +145,12 @@ public class RichBisonBBQPlateBlock extends HorizontalDirectionalBlock {
                 return false;
             }
         }
-
         return true;
     }
 
     private void setAllBitesZero(Level world, BlockPos pos, BlockState state) {
         Direction facing = state.getValue(FACING);
         BlockPos[] allPositions = getAllBlockPositions(pos, facing, state.getBlock());
-
         for (BlockPos blockPos : allPositions) {
             BlockState blockState = world.getBlockState(blockPos);
             if (blockState.getBlock() instanceof RichBisonBBQPlateBlock) {
@@ -193,9 +186,9 @@ public class RichBisonBBQPlateBlock extends HorizontalDirectionalBlock {
     }
 
     private BlockPos[] getAllBlockPositions(BlockPos pos, Direction facing, Block blockType) {
-        BlockPos[] positions = new BlockPos[4];
-        positions[0] = pos;
         BlockPos[] otherPositions = getOtherBlockPositions(pos, facing, blockType);
+        BlockPos[] positions = new BlockPos[1 + otherPositions.length];
+        positions[0] = pos;
         System.arraycopy(otherPositions, 0, positions, 1, otherPositions.length);
         return positions;
     }
@@ -216,19 +209,16 @@ public class RichBisonBBQPlateBlock extends HorizontalDirectionalBlock {
             shape = Shapes.join(shape, Shapes.box(0.0625, 0.0625, 0.1875, 0.6875, 0.5625, 0.8125), BooleanOp.OR);
             return shape;
         };
-
         private static final Supplier<VoxelShape> BigVoxelShapeSupplier = () -> {
             VoxelShape shape = Shapes.empty();
             shape = Shapes.join(shape, Shapes.box(0, 0, 0, 0.875, 0.0625, 0.875), BooleanOp.OR);
             return shape;
         };
-
         public static final Map<Direction, VoxelShape> SHAPE = Util.make(new HashMap<>(), map -> {
             for (Direction direction : Direction.Plane.HORIZONTAL) {
                 map.put(direction, SafariBanquetUtil.rotateShape(Direction.NORTH, direction, VoxelShapeSupplier.get()));
             }
         });
-
         public static final Map<Direction, VoxelShape> BIG_SHAPE = Util.make(new HashMap<>(), map -> {
             for (Direction direction : Direction.Plane.HORIZONTAL) {
                 map.put(direction, SafariBanquetUtil.rotateShape(Direction.NORTH, direction, BigVoxelShapeSupplier.get()));
@@ -256,9 +246,12 @@ public class RichBisonBBQPlateBlock extends HorizontalDirectionalBlock {
                 BlockPos mainPos = pos.relative(facing);
                 BlockPos sidePos = pos.relative(facing.getCounterClockWise());
                 BlockPos diagonalPos = sidePos.relative(facing.getClockWise());
-                level.removeBlock(mainPos, false);
-                level.removeBlock(sidePos, false);
-                level.removeBlock(diagonalPos, false);
+                if (level.getBlockState(mainPos).getBlock() instanceof RichBisonBBQPlateBlock)
+                    level.removeBlock(mainPos, false);
+                if (level.getBlockState(sidePos).getBlock() instanceof RichBisonBBQPlateBlock)
+                    level.removeBlock(sidePos, false);
+                if (level.getBlockState(diagonalPos).getBlock() instanceof RichBisonBBQPlateBlock)
+                    level.removeBlock(diagonalPos, false);
             }
             super.onRemove(state, level, pos, newState, moved);
         }
@@ -271,19 +264,16 @@ public class RichBisonBBQPlateBlock extends HorizontalDirectionalBlock {
             shape = Shapes.join(shape, Shapes.box(0.1875, 0.0625, 0.0625, 0.9375, 0.3125, 0.8125), BooleanOp.OR);
             return shape;
         };
-
         private static final Supplier<VoxelShape> BigVoxelShapeSupplier = () -> {
             VoxelShape shape = Shapes.empty();
             shape = Shapes.join(shape, Shapes.box(0.125, 0, 0, 1, 0.0625, 0.875), BooleanOp.OR);
             return shape;
         };
-
         public static final Map<Direction, VoxelShape> SHAPE = Util.make(new HashMap<>(), map -> {
             for (Direction direction : Direction.Plane.HORIZONTAL) {
                 map.put(direction, SafariBanquetUtil.rotateShape(Direction.NORTH, direction, VoxelShapeSupplier.get()));
             }
         });
-
         public static final Map<Direction, VoxelShape> BIG_SHAPE = Util.make(new HashMap<>(), map -> {
             for (Direction direction : Direction.Plane.HORIZONTAL) {
                 map.put(direction, SafariBanquetUtil.rotateShape(Direction.NORTH, direction, BigVoxelShapeSupplier.get()));
@@ -311,9 +301,12 @@ public class RichBisonBBQPlateBlock extends HorizontalDirectionalBlock {
                 BlockPos mainPos = pos.relative(facing.getClockWise().getOpposite());
                 BlockPos backPos = pos.relative(facing.getOpposite());
                 BlockPos sidePos = pos.relative(facing.getClockWise());
-                level.removeBlock(mainPos, false);
-                level.removeBlock(backPos, false);
-                level.removeBlock(sidePos, false);
+                if (level.getBlockState(mainPos).getBlock() instanceof RichBisonBBQPlateBlock)
+                    level.removeBlock(mainPos, false);
+                if (level.getBlockState(backPos).getBlock() instanceof RichBisonBBQPlateBlock)
+                    level.removeBlock(backPos, false);
+                if (level.getBlockState(sidePos).getBlock() instanceof RichBisonBBQPlateBlock)
+                    level.removeBlock(sidePos, false);
             }
             super.onRemove(state, level, pos, newState, moved);
         }
@@ -369,9 +362,12 @@ public class RichBisonBBQPlateBlock extends HorizontalDirectionalBlock {
                 BlockPos backPos = pos.relative(facing.getOpposite());
                 BlockPos sidePos = pos.relative(facing.getCounterClockWise());
                 BlockPos diagonalPos = sidePos.relative(facing.getOpposite());
-                level.removeBlock(backPos, false);
-                level.removeBlock(sidePos, false);
-                level.removeBlock(diagonalPos, false);
+                if (level.getBlockState(backPos).getBlock() instanceof RichBisonBBQPlateBlock)
+                    level.removeBlock(backPos, false);
+                if (level.getBlockState(sidePos).getBlock() instanceof RichBisonBBQPlateBlock)
+                    level.removeBlock(sidePos, false);
+                if (level.getBlockState(diagonalPos).getBlock() instanceof RichBisonBBQPlateBlock)
+                    level.removeBlock(diagonalPos, false);
             }
             super.onRemove(state, level, pos, newState, moved);
         }
@@ -384,19 +380,16 @@ public class RichBisonBBQPlateBlock extends HorizontalDirectionalBlock {
             shape = Shapes.join(shape, Shapes.box(0.1875, 0.0625, 0.1875, 0.9375, 0.25, 0.9375), BooleanOp.OR);
             return shape;
         };
-
         private static final Supplier<VoxelShape> BigVoxelShapeSupplier = () -> {
             VoxelShape shape = Shapes.empty();
             shape = Shapes.join(shape, Shapes.box(0.125, 0, 0.125, 1, 0.0625, 1), BooleanOp.OR);
             return shape;
         };
-
         public static final Map<Direction, VoxelShape> SHAPE = Util.make(new HashMap<>(), map -> {
             for (Direction direction : Direction.Plane.HORIZONTAL) {
                 map.put(direction, SafariBanquetUtil.rotateShape(Direction.NORTH, direction, shapeSupplier.get()));
             }
         });
-
         public static final Map<Direction, VoxelShape> BIG_SHAPE = Util.make(new HashMap<>(), map -> {
             for (Direction direction : Direction.Plane.HORIZONTAL) {
                 map.put(direction, SafariBanquetUtil.rotateShape(Direction.NORTH, direction, BigVoxelShapeSupplier.get()));
@@ -424,9 +417,12 @@ public class RichBisonBBQPlateBlock extends HorizontalDirectionalBlock {
                 BlockPos mainPos = pos.relative(facing.getClockWise().getOpposite());
                 BlockPos backPos = pos.relative(facing.getOpposite());
                 BlockPos sidePos = pos.relative(facing.getClockWise());
-                level.removeBlock(mainPos, false);
-                level.removeBlock(backPos, false);
-                level.removeBlock(sidePos, false);
+                if (level.getBlockState(mainPos).getBlock() instanceof RichBisonBBQPlateBlock)
+                    level.removeBlock(mainPos, false);
+                if (level.getBlockState(backPos).getBlock() instanceof RichBisonBBQPlateBlock)
+                    level.removeBlock(backPos, false);
+                if (level.getBlockState(sidePos).getBlock() instanceof RichBisonBBQPlateBlock)
+                    level.removeBlock(sidePos, false);
             }
             super.onRemove(state, level, pos, newState, moved);
         }

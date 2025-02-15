@@ -16,8 +16,8 @@
 				"east": {"uv": [15, 14, 1, 15], "texture": "#1"},
 				"south": {"uv": [15, 14, 1, 15], "texture": "#1"},
 				"west": {"uv": [15, 14, 1, 15], "texture": "#1"},
-				"up": {"uv": [15, 1, 1, 15], "texture": "#1"},
-				"down": {"uv": [15, 15, 1, 1], "texture": "#1"}
+				"up": {"uv": [1, 15, 15, 1], "rotation": 270, "texture": "#1"},
+				"down": {"uv": [15, 15, 1, 1], "rotation": 270, "texture": "#1"}
 			}
 		},
 		{
@@ -47,16 +47,16 @@
 			}
 		},
 		{
-			"name": "bite_3",
-			"from": [9, 1, 9],
-			"to": [11, 3, 16],
-			"rotation": {"angle": 45, "axis": "y", "origin": [11, 1, 9]},
+			"name": "bite_4",
+			"from": [10, 1, 5],
+			"to": [12, 3, 12],
+			"rotation": {"angle": 0, "axis": "y", "origin": [12, 1, 5]},
 			"faces": {
-				"north": {"uv": [10, 4, 8, 6], "texture": "#0"},
-				"east": {"uv": [11, 0, 4, 2], "texture": "#0"},
-				"south": {"uv": [9, 0, 7, 2], "texture": "#0"},
-				"west": {"uv": [11, 2, 4, 4], "texture": "#0"},
-				"up": {"uv": [2, 0, 0, 7], "texture": "#0"}
+				"north": {"uv": [11, 3, 9, 5], "texture": "#0"},
+				"east": {"uv": [11, 4, 4, 6], "texture": "#0"},
+				"south": {"uv": [11, 0, 9, 2], "texture": "#0"},
+				"west": {"uv": [11, 6, 4, 8], "texture": "#0"},
+				"up": {"uv": [4, 0, 2, 7], "texture": "#0"}
 			}
 		}
 	],

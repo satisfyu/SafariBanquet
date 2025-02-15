@@ -14,7 +14,7 @@ import net.satisfy.safaribanquet.core.util.SafariBanquetIdentifier;
 
 import java.util.function.Supplier;
 
-public class MobEffectRegistry {
+public class SBMobEffectRegistry {
     private static final DeferredRegister<MobEffect> MOB_EFFECTS = DeferredRegister.create(SafariBanquet.MOD_ID, Registries.MOB_EFFECT);
     private static final Registrar<MobEffect> MOB_EFFECTS_REGISTRAR = MOB_EFFECTS.getRegistrar();
 

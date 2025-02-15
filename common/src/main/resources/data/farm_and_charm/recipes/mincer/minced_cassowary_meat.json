@@ -1,0 +1,11 @@
+{
+  "type": "farm_and_charm:mincer",
+  "ingredient": {
+    "item": "wildernature:cassowary_meat"
+  },
+  "recipe_type": "MEAT",
+  "result": {
+    "item": "safaribanquet:minced_cassowary_meat",
+    "count": 2
+  }
+}

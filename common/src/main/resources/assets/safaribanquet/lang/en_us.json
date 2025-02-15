@@ -10,19 +10,20 @@
   "block.safaribanquet.bison_burger_block": "Bison Burger",
   "block.safaribanquet.pelican_potroast_block": "Pelican Potroast",
   "block.safaribanquet.turkey_with_vegetables_block": "Turkey with Vegetables",
-  "block.safaribanquet.venison_with_pasta_and_sauce_block": "Venison with Pasta and Sauce",
+  "block.safaribanquet.venison_with_potatoes_block": "Venison with Potatoes",
   "block.safaribanquet.rich_bison_bbq_plate_main": "Rich Bison Barbecue",
   "block.safaribanquet.burrito_flatbread": "Burrito Flatbread",
 
-  "block.safaribanquet.hazelnut_cake_block": "Hazelnut Cake",
-  "item.safaribanquet.hazelnut_cake_slice": "Hazelnut Cake Slice",
+  "block.safaribanquet.hazelnut_pie": "Hazelnut Pie",
+  "item.safaribanquet.hazelnut_pie_slice": "Hazelnut Pie Slice",
   "item.safaribanquet.minced_cassowary_meat": "Minced Cassowary Meat",
-  "item.safaribanquet.burrito_beef": "Burrito Beef",
+  "item.safaribanquet.seasoned_cassowary_meat": "Seasoned Cassowary Beef",
   "item.safaribanquet.vegetable_burrito": "Vegetable Burrito",
   "item.safaribanquet.combo_burrito": "Combo Burrito",
   "item.safaribanquet.cassowary_burrito": "Cassowary Burrito",
   "item.safaribanquet.dried_venison": "Dried Venison",
 
+  "effect.safaribanquet.flameguard": "Flameguard",
   "effect.safaribanquet.repulsion": "Repulsion",
   "effect.safaribanquet.water_walking": "Water Walking"
 }

@@ -1,10 +1,10 @@
 {
 	"credit": "Made by Satisfy",
 	"textures": {
-		"0": "safaribanquet:block/hazelnut_cake_top",
-		"1": "safaribanquet:block/hazelnut_cake_side",
-		"2": "safaribanquet:block/hazelnut_cake_bottom",
-		"particle": "safaribanquet:block/hazelnut_cake_top"
+		"0": "safaribanquet:block/hazelnut_pie_top",
+		"1": "safaribanquet:block/hazelnut_pie_side",
+		"2": "safaribanquet:block/hazelnut_pie_bottom",
+		"particle": "safaribanquet:block/hazelnut_pie_top"
 	},
 	"elements": [
 		{

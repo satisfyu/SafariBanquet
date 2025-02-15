@@ -45,7 +45,7 @@ public class BurritoBlock extends Block {
     @Override
     public @NotNull InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         ItemStack heldItem = player.getItemInHand(hand);
-        if (heldItem.is(ObjectRegistry.BURRITO_BEEF.get())) {
+        if (heldItem.is(ObjectRegistry.SEASONED_CASSOWARY_MEAT.get())) {
             world.setBlock(pos, state.setValue(MEAT, true), 3);
             if (!player.isCreative()) {
                 heldItem.shrink(1);

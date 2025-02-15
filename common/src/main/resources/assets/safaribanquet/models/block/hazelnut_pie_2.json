@@ -1,25 +1,12 @@
 {
 	"credit": "Made by Satisfy",
 	"textures": {
-		"0": "safaribanquet:block/hazelnut_cake_top",
-		"1": "safaribanquet:block/hazelnut_cake_side",
-		"2": "safaribanquet:block/hazelnut_cake_bottom",
-		"particle": "safaribanquet:block/hazelnut_cake_top"
+		"0": "safaribanquet:block/hazelnut_pie_top",
+		"1": "safaribanquet:block/hazelnut_pie_side",
+		"2": "safaribanquet:block/hazelnut_pie_bottom",
+		"particle": "safaribanquet:block/hazelnut_pie_top"
 	},
 	"elements": [
-		{
-			"from": [2, 0, 2],
-			"to": [8, 5, 8],
-			"rotation": {"angle": 0, "axis": "y", "origin": [2, 0, 2]},
-			"faces": {
-				"north": {"uv": [8, 3, 14, 8], "texture": "#1"},
-				"east": {"uv": [8, 8, 14, 13], "texture": "#1"},
-				"south": {"uv": [2, 8, 8, 13], "texture": "#1"},
-				"west": {"uv": [2, 3, 8, 8], "texture": "#1"},
-				"up": {"uv": [2, 2, 8, 8], "texture": "#0"},
-				"down": {"uv": [2, 8, 8, 14], "texture": "#2"}
-			}
-		},
 		{
 			"from": [2, 0, 8],
 			"to": [8, 5, 14],
