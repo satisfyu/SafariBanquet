@@ -147,7 +147,6 @@ public class HazelnutCakeBlock extends Block {
         } else {
             ItemStack sliceStack = this.getPieSliceItem();
             FoodProperties sliceFood = sliceStack.getItem().getFoodProperties();
-
             playerIn.getFoodData().eat(sliceStack.getItem(), sliceStack);
             if (this.getPieSliceItem().getItem().isEdible() && sliceFood != null) {
                 for (Pair<MobEffectInstance, Float> pair : sliceFood.getEffects()) {
@@ -156,13 +155,14 @@ public class HazelnutCakeBlock extends Block {
                     }
                 }
             }
-
             int cuts = state.getValue(CUTS);
+            int stateId = Block.getId(state);
             if (cuts < getMaxCuts() - 1) {
                 level.setBlock(pos, state.setValue(CUTS, cuts + 1), 3);
             } else {
                 level.destroyBlock(pos, false);
             }
+            level.levelEvent(2001, pos, stateId);
             level.playSound(null, pos, SoundEvents.GENERIC_EAT, SoundSource.PLAYERS, 0.8F, 0.8F);
             return InteractionResult.SUCCESS;
         }
@@ -170,19 +170,19 @@ public class HazelnutCakeBlock extends Block {
 
     protected InteractionResult cutSlice(Level level, BlockPos pos, BlockState state, Player player) {
         int cuts = state.getValue(CUTS);
+        int stateId = Block.getId(state);
         if (cuts < getMaxCuts() - 1) {
             level.setBlock(pos, state.setValue(CUTS, cuts + 1), 3);
         } else {
             level.removeBlock(pos, false);
         }
-
+        level.levelEvent(2001, pos, stateId);
         Direction direction = player.getDirection().getOpposite();
         double xMotion = direction.getStepX() * 0.13;
         double yMotion = 0.35;
         double zMotion = direction.getStepZ() * 0.13;
-
         SafariBanquetUtil.spawnSlice(level, this.getPieSliceItem(), pos.getX() + 0.5, pos.getY() + 0.3, pos.getZ() + 0.5, xMotion, yMotion, zMotion);
-        level.playSound(null, pos, SoundEvents.ITEM_FRAME_REMOVE_ITEM, SoundSource.PLAYERS, 0.75F, 0.75F);
+        level.playSound(null, pos, SoundEvents.HONEYCOMB_WAX_ON, SoundSource.PLAYERS, 2.5F, 1.0F);
         return InteractionResult.SUCCESS;
     }
 

@@ -39,9 +39,9 @@ public class TabRegistry {
                 out.accept(ObjectRegistry.TURKEY_ON_A_BED_OF_SHROOMS_RECIPE_BOOK_STACK.get());
                 out.accept(ObjectRegistry.PORKCHOP_WITH_TRUFFLES_RECIPE_BOOK_STACK.get());
                 out.accept(ObjectRegistry.TURKEY_WITH_VEGETABLES_RECIPE_BOOK_STACK.get());
-                out.accept(ObjectRegistry.VENISON_WITH_POTATOES_RECIPE_BOOK_STACK.get());
                 out.accept(ObjectRegistry.SEASONED_CASSOWARY_MEAT_RECIPE_BOOK_STACK.get());
                 out.accept(ObjectRegistry.PELICAN_POTROAST_RECIPE_BOOK_STACK.get());
+                out.accept(ObjectRegistry.VENISON_WITH_POTATOES_RECIPE_BOOK_STACK.get());
             })
             .build());
 

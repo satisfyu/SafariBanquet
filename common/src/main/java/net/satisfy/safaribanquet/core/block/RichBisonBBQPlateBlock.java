@@ -1,17 +1,26 @@
 package net.satisfy.safaribanquet.core.block;
 
+import com.mojang.datafixers.util.Pair;
+import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffectUtil;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -32,7 +41,9 @@ import net.satisfy.safaribanquet.core.util.SafariBanquetUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
@@ -66,6 +77,66 @@ public class RichBisonBBQPlateBlock extends HorizontalDirectionalBlock {
         super(properties);
         this.foodComponent = foodComponent;
         this.registerDefaultState(this.defaultBlockState().setValue(BITES, 4).setValue(FACING, Direction.NORTH));
+    }
+
+    public FoodProperties getFoodProperties() {
+        return this.foodComponent;
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, BlockGetter getter, List<Component> tooltip, TooltipFlag flag) {
+        Block block = this.asBlock();
+        if (!(block instanceof RichBisonBBQPlateBlock plateBlock)) {
+            return;
+        }
+
+        List<Pair<MobEffectInstance, Float>> effects = plateBlock.getFoodProperties() != null ? plateBlock.getFoodProperties().getEffects() : new ArrayList<>();
+        List<Pair<Attribute, AttributeModifier>> modifiers = new ArrayList<>();
+
+        if (effects.isEmpty()) {
+            tooltip.add(Component.translatable("effect.none").plainCopy().withStyle(ChatFormatting.GRAY));
+        } else {
+            for (Pair<MobEffectInstance, Float> effectPair : effects) {
+                MobEffectInstance effectInstance = effectPair.getFirst();
+                MutableComponent comp = Component.translatable(effectInstance.getDescriptionId());
+
+                Map<Attribute, AttributeModifier> map = effectInstance.getEffect().getAttributeModifiers();
+                if (!map.isEmpty()) {
+                    for (Map.Entry<Attribute, AttributeModifier> entry : map.entrySet()) {
+                        AttributeModifier mod = entry.getValue();
+                        AttributeModifier newMod = new AttributeModifier(mod.getName(), effectInstance.getEffect().getAttributeModifierValue(effectInstance.getAmplifier(), mod), mod.getOperation());
+                        modifiers.add(new Pair<>(entry.getKey(), newMod));
+                    }
+                }
+
+                if (effectInstance.getDuration() > 20) {
+                    comp = Component.translatable("potion.withDuration", comp, MobEffectUtil.formatDuration(effectInstance, effectPair.getSecond()));
+                }
+
+                tooltip.add(comp.withStyle(effectInstance.getEffect().getCategory().getTooltipFormatting()));
+            }
+        }
+
+        if (!modifiers.isEmpty()) {
+            tooltip.add(Component.empty());
+            tooltip.add(Component.translatable("potion.whenDrank").plainCopy().withStyle(ChatFormatting.DARK_PURPLE));
+
+            for (Pair<Attribute, AttributeModifier> pair : modifiers) {
+                AttributeModifier mod = pair.getSecond();
+                double amount = mod.getAmount();
+                double displayAmount = mod.getOperation() != Operation.MULTIPLY_BASE && mod.getOperation() != Operation.MULTIPLY_TOTAL ? mod.getAmount() : mod.getAmount() * 100.0;
+
+                if (amount > 0.0) {
+                    tooltip.add(Component.translatable("attribute.modifier.plus." + mod.getOperation().toValue(), ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(displayAmount), Component.translatable(pair.getFirst().getDescriptionId())).withStyle(ChatFormatting.BLUE));
+                } else if (amount < 0.0) {
+                    displayAmount *= -1.0;
+                    tooltip.add(Component.translatable("attribute.modifier.take." + mod.getOperation().toValue(), ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(displayAmount), Component.translatable(pair.getFirst().getDescriptionId())).withStyle(ChatFormatting.RED));
+                }
+            }
+        }
+
+        tooltip.add(Component.empty());
+        tooltip.add(Component.translatable("tooltip.safaribanquet.canbeplaced").plainCopy().withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
     }
 
     @Override

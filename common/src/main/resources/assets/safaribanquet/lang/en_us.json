@@ -34,5 +34,7 @@
   "item.safaribanquet.turkey_on_a_bed_of_shrooms_recipe_book": "Grandmother’s Secret Feast",
   "item.safaribanquet.turkey_with_vegetables_recipe_book": "Flavors of the Harvest",
   "item.safaribanquet.venison_with_potatoes_recipe_book": "The Hunter’s Hearty Fare",
-  "entity.minecraft.villager.food_stamp_trader": "Food Stamp Trader"
+  "entity.minecraft.villager.food_stamp_trader": "Food Stamp Trader",
+  "entity.minecraft.villager.safaribanquet.food_stamp_trader": "Food Stamp Trader"
+
 }

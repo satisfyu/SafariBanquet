@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "safaribanquet:item/nanas_timeless_secrets"
+    "layer0": "safaribanquet:item/the_hunters_hearty_fare"
   }
 }

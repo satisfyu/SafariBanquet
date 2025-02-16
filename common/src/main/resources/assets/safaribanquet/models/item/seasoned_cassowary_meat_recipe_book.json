@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "safaribanquet:item/whispers_of_the_wooden_spoon"
+    "layer0": "safaribanquet:item/mysteries_of_the_open_fire"
   }
 }

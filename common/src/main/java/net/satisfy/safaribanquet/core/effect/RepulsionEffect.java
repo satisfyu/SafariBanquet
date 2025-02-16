@@ -12,7 +12,7 @@ import java.util.List;
 public class RepulsionEffect extends MobEffect {
 
     public RepulsionEffect() {
-        super(MobEffectCategory.BENEFICIAL, 0xFFFFFF);
+        super(MobEffectCategory.BENEFICIAL, 0);
     }
 
     @Override

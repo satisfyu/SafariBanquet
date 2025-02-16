@@ -10,7 +10,7 @@ import net.minecraft.util.Mth;
 public class FlameguardEffect extends MobEffect {
 
     public FlameguardEffect() {
-        super(MobEffectCategory.BENEFICIAL, 0xFFFFFF);
+        super(MobEffectCategory.BENEFICIAL, 0);
     }
 
     @Override

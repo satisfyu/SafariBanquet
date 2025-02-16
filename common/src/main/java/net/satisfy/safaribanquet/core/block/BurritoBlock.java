@@ -60,15 +60,18 @@ public class BurritoBlock extends Block {
         } else if (player.isShiftKeyDown()) {
             if (state.getValue(MEAT) && state.getValue(VEGETABLES)) {
                 popResource(world, pos, new ItemStack(ObjectRegistry.COMBO_BURRITO.get()));
-                world.setBlock(pos, this.defaultBlockState(), 3);
+                world.levelEvent(2001, pos, Block.getId(state));
+                world.removeBlock(pos, false);
                 return InteractionResult.SUCCESS;
             } else if (state.getValue(MEAT)) {
                 popResource(world, pos, new ItemStack(ObjectRegistry.CASSOWARY_BURRITO.get()));
-                world.setBlock(pos, this.defaultBlockState(), 3);
+                world.levelEvent(2001, pos, Block.getId(state));
+                world.removeBlock(pos, false);
                 return InteractionResult.SUCCESS;
             } else if (state.getValue(VEGETABLES)) {
                 popResource(world, pos, new ItemStack(ObjectRegistry.VEGETABLE_BURRITO.get()));
-                world.setBlock(pos, this.defaultBlockState(), 3);
+                world.levelEvent(2001, pos, Block.getId(state));
+                world.removeBlock(pos, false);
                 return InteractionResult.SUCCESS;
             }
         }
