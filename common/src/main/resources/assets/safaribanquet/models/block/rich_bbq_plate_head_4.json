@@ -1,9 +1,9 @@
 {
 	"credit": "Made by Satisfy",
 	"textures": {
-		"1": "safaribanquet:block/rich_bison_bbq_plate",
-		"2": "safaribanquet:block/rich_bison_bbq_plate_head",
-		"particle": "safaribanquet:block/rich_bison_bbq_plate_head"
+		"1": "safaribanquet:block/rich_bbq_plate",
+		"2": "safaribanquet:block/rich_bbq_plate_head",
+		"particle": "safaribanquet:block/rich_bbq_plate_head"
 	},
 	"elements": [
 		{

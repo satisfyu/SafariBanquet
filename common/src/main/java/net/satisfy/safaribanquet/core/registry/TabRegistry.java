@@ -26,7 +26,7 @@ public class TabRegistry {
                 out.accept(ObjectRegistry.TURKEY_WITH_VEGETABLES_ITEM.get());
                 out.accept(ObjectRegistry.VENISON_WITH_POTATOES_ITEM.get());
                 out.accept(ObjectRegistry.PORKCHOP_WITH_TRUFFLES_ITEM.get());
-                out.accept(ObjectRegistry.RICH_BISON_BBQ_PLATE_MAIN.get());
+                out.accept(ObjectRegistry.RICH_BBQ_PLATE_MAIN.get());
                 out.accept(ObjectRegistry.HAZELNUT_PIE.get());
                 out.accept(ObjectRegistry.HAZELNUT_PIE_SLICE.get());
                 out.accept(ObjectRegistry.BURRITO_FLATBREAD.get());

@@ -14,6 +14,5 @@ public class SafariBanquetForge {
         EventBuses.registerModEventBus(SafariBanquet.MOD_ID, FMLJavaModLoadingContext.get().getModEventBus());
         SafariBanquet.init();
         ForgeVillagerTrades.register(modEventBus);
-
     }
 }

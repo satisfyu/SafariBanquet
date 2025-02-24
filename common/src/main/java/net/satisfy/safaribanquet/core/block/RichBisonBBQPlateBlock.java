@@ -89,17 +89,13 @@ public class RichBisonBBQPlateBlock extends HorizontalDirectionalBlock {
         if (!(block instanceof RichBisonBBQPlateBlock plateBlock)) {
             return;
         }
-
         List<Pair<MobEffectInstance, Float>> effects = plateBlock.getFoodProperties() != null ? plateBlock.getFoodProperties().getEffects() : new ArrayList<>();
         List<Pair<Attribute, AttributeModifier>> modifiers = new ArrayList<>();
-
         if (effects.isEmpty()) {
-            tooltip.add(Component.translatable("effect.none").plainCopy().withStyle(ChatFormatting.GRAY));
         } else {
             for (Pair<MobEffectInstance, Float> effectPair : effects) {
                 MobEffectInstance effectInstance = effectPair.getFirst();
                 MutableComponent comp = Component.translatable(effectInstance.getDescriptionId());
-
                 Map<Attribute, AttributeModifier> map = effectInstance.getEffect().getAttributeModifiers();
                 if (!map.isEmpty()) {
                     for (Map.Entry<Attribute, AttributeModifier> entry : map.entrySet()) {
@@ -108,24 +104,25 @@ public class RichBisonBBQPlateBlock extends HorizontalDirectionalBlock {
                         modifiers.add(new Pair<>(entry.getKey(), newMod));
                     }
                 }
-
                 if (effectInstance.getDuration() > 20) {
                     comp = Component.translatable("potion.withDuration", comp, MobEffectUtil.formatDuration(effectInstance, effectPair.getSecond()));
                 }
-
                 tooltip.add(comp.withStyle(effectInstance.getEffect().getCategory().getTooltipFormatting()));
             }
         }
-
+        MobEffectInstance repulsionEffect = new MobEffectInstance(SBMobEffectRegistry.REPULSION.get(), 600, 0);
+        MutableComponent repulsionComp = Component.translatable(repulsionEffect.getDescriptionId());
+        if (repulsionEffect.getDuration() > 20) {
+            repulsionComp = Component.translatable("potion.withDuration", repulsionComp, MobEffectUtil.formatDuration(repulsionEffect, 1.0F));
+        }
+        tooltip.add(repulsionComp.withStyle(SBMobEffectRegistry.REPULSION.get().getCategory().getTooltipFormatting()));
         if (!modifiers.isEmpty()) {
             tooltip.add(Component.empty());
             tooltip.add(Component.translatable("potion.whenDrank").plainCopy().withStyle(ChatFormatting.DARK_PURPLE));
-
             for (Pair<Attribute, AttributeModifier> pair : modifiers) {
                 AttributeModifier mod = pair.getSecond();
                 double amount = mod.getAmount();
                 double displayAmount = mod.getOperation() != Operation.MULTIPLY_BASE && mod.getOperation() != Operation.MULTIPLY_TOTAL ? mod.getAmount() : mod.getAmount() * 100.0;
-
                 if (amount > 0.0) {
                     tooltip.add(Component.translatable("attribute.modifier.plus." + mod.getOperation().toValue(), ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(displayAmount), Component.translatable(pair.getFirst().getDescriptionId())).withStyle(ChatFormatting.BLUE));
                 } else if (amount < 0.0) {
@@ -134,7 +131,6 @@ public class RichBisonBBQPlateBlock extends HorizontalDirectionalBlock {
                 }
             }
         }
-
         tooltip.add(Component.empty());
         tooltip.add(Component.translatable("tooltip.safaribanquet.canbeplaced").plainCopy().withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
     }
@@ -142,7 +138,7 @@ public class RichBisonBBQPlateBlock extends HorizontalDirectionalBlock {
     @Override
     public @NotNull ItemStack getCloneItemStack(BlockGetter getter, BlockPos pos, BlockState state) {
         if (this instanceof BBQPlateMainBlock) {
-            return new ItemStack(ObjectRegistry.RICH_BISON_BBQ_PLATE_MAIN.get());
+            return new ItemStack(ObjectRegistry.RICH_BBQ_PLATE_MAIN.get());
         }
         return super.getCloneItemStack(getter, pos, state);
     }
@@ -421,9 +417,9 @@ public class RichBisonBBQPlateBlock extends HorizontalDirectionalBlock {
             BlockPos sidePos = pos.relative(facing.getCounterClockWise());
             BlockPos diagonalPos = sidePos.relative(facing.getOpposite());
             if (!canPlace(level, backPos, sidePos, diagonalPos)) return;
-            level.setBlock(backPos, ObjectRegistry.RICH_BISON_BBQ_PLATE_HEAD.get().defaultBlockState().setValue(FACING, facing).setValue(BITES, 4), 3);
-            level.setBlock(sidePos, ObjectRegistry.RICH_BISON_BBQ_PLATE_RIGHT.get().defaultBlockState().setValue(FACING, facing).setValue(BITES, 4), 3);
-            level.setBlock(diagonalPos, ObjectRegistry.RICH_BISON_BBQ_PLATE_HEAD_RIGHT.get().defaultBlockState().setValue(FACING, facing).setValue(BITES, 4), 3);
+            level.setBlock(backPos, ObjectRegistry.RICH_BBQ_PLATE_HEAD.get().defaultBlockState().setValue(FACING, facing).setValue(BITES, 4), 3);
+            level.setBlock(sidePos, ObjectRegistry.RICH_BBQ_PLATE_RIGHT.get().defaultBlockState().setValue(FACING, facing).setValue(BITES, 4), 3);
+            level.setBlock(diagonalPos, ObjectRegistry.RICH_BBQ_PLATE_HEAD_RIGHT.get().defaultBlockState().setValue(FACING, facing).setValue(BITES, 4), 3);
         }
 
         @Override

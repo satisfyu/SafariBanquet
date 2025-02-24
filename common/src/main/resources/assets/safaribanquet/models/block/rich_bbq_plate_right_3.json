@@ -1,9 +1,9 @@
 {
 	"credit": "Made by Satisfy",
 	"textures": {
-		"0": "safaribanquet:block/rich_bison_bbq_plate_right",
-		"1": "safaribanquet:block/rich_bison_bbq_plate",
-		"particle": "safaribanquet:block/rich_bison_bbq_plate_right"
+		"0": "safaribanquet:block/rich_bbq_plate_right",
+		"1": "safaribanquet:block/rich_bbq_plate",
+		"particle": "safaribanquet:block/rich_bbq_plate_right"
 	},
 	"elements": [
 		{
@@ -45,6 +45,19 @@
 				"west": {"uv": [11, 6, 4, 8], "texture": "#0"},
 				"up": {"uv": [4, 0, 2, 7], "texture": "#0"}
 			}
+		},
+		{
+			"name": "bite_4",
+			"from": [10, 1, 5],
+			"to": [12, 3, 12],
+			"rotation": {"angle": 0, "axis": "y", "origin": [12, 1, 5]},
+			"faces": {
+				"north": {"uv": [11, 3, 9, 5], "texture": "#0"},
+				"east": {"uv": [11, 4, 4, 6], "texture": "#0"},
+				"south": {"uv": [11, 0, 9, 2], "texture": "#0"},
+				"west": {"uv": [11, 6, 4, 8], "texture": "#0"},
+				"up": {"uv": [4, 0, 2, 7], "texture": "#0"}
+			}
 		}
 	],
 	"groups": [
@@ -58,7 +71,7 @@
 					"name": "sausage",
 					"origin": [2, 0, 2],
 					"color": 0,
-					"children": [1, 2]
+					"children": [1, 2, 3]
 				}
 			]
 		}

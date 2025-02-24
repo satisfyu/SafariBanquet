@@ -1,0 +1,34 @@
+{
+  "type": "farm_and_charm:pot_cooking",
+  "ingredients": [
+    {
+      "item": "wildernature:bison_meat"
+    },
+    {
+      "item": "wildernature:pelican_meat"
+    },
+    {
+      "item": "safaribanquet:minced_cassowary_meat"
+    },
+    {
+      "item": "minecraft:cooked_porkchop"
+    },
+    {
+      "item": "wildernature:venison"
+    },
+    {
+      "item": "wildernature:cooked_turkey_meat"
+    }
+  ],
+  "container": {
+    "required": true,
+    "item": {
+      "item": "minecraft:bowl"
+    }
+  },
+  "result": {
+    "item": "safaribanquet:rich_bbq_plate_main",
+    "count": 3
+  },
+  "requiresLearning": true
+}

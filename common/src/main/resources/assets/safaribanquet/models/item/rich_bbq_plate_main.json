@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "safaribanquet:item/rich_bison_bbq_plate"
+    "layer0": "safaribanquet:item/rich_barbecue"
   }
 }
